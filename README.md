@@ -106,3 +106,5 @@ root@hash:/app# ./jupyter-lab.sh
 `````powershell
 docker rmi python_light
 `````
+
+<img src="https://media.githubusercontent.com/media/MatteusStranger/genetic_algorithm_mc906/assets/assets/gif/example.gif" width="800" height="400"/>

@@ -1,0 +1,6 @@
+Inicialmente, temos uma entrada de 4 valores float que representam os x's.
+Depois, defino a população inicial. Com base no número de pesos, cada cromossomo na população 4 genes
+Depois, crio o número de soluções por população. Valor na mão, mas posso deixar para o usuário. Armazeno também o tamanho da população.
+Com numpy, eu crio a população inicial aleatoriamente.
+Aí vem o fitness. Com o fitness dá para escolher os pais por meio do cruzamento.
+Daí é história. Fico nessa até esgotar as gerações. Nesse caso, não fico ad infinito até chegar numa solução boa, eu seto a quantidade máxima de gerações.

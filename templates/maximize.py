@@ -9,12 +9,16 @@ quantization = (high_bound - low_bound) / (2 ** 4 - 1)  # quantização
 fc = lambda x, exp: np.sum(x * 2 ** exp) * quantization + low_bound  # decoficação
 fy = lambda x1, x2, x3, x4: 5 * fc(x1, exp) - 3 * fc(x2, exp) * fc(x3, exp) \
                             + fc(x3, exp) - 2 * fc(x4, exp)  # função objetiva
-s0 = np.array([0, 1, 1, 0,
-               1, 1, 0, 0,
-               1, 0, 1, 1,
-               0, 0, 0, 1])  # Estado inicial
+#Matteus Vargas: o fy é o cara que preciso ficar modificando. Só preciso entender melhor os detalhes aqui
 
-M = 10000  # Numero de geração
+s0 = np.random.randint(2, size=16) #Matteus Vargas: deixei a população inicial aleatória. Vou trocar isso para entrada do usuário
+print(f'População inicial (random) {s0}')
+# s0 = np.array([0, 1, 1, 0,
+#              1, 1, 0, 0,
+#             1, 0, 1, 1,
+#            0, 0, 0, 1])  # Estado inicial
+
+M = 1000  # Numero de geração #Matteus Vargas: quero deixar esse valor aberto, só preciso achar uma forma de parada
 score = []  # melhor resultado da função objetiva
 score_fit = []  # Armazena o melhor da geração
 
@@ -28,6 +32,7 @@ def cromo(s0):
     vet.append(s0[12:])
     return vet
 
+#Matteus Vargas: vou arrumar uma maneira de particionar as operações de GA em defs e colocar em outro arquivo. Deixar esse só para elaborar a função em si
 
 for i in range(M):
     cromosome = []  # Guarda os cromossomos com crossover

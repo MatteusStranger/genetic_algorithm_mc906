@@ -1,8 +1,13 @@
 import numpy
 
-
 def ajuste_da_populacao(valores_de_x, nova_populacao):
-    ajuste = numpy.sum(nova_populacao * valores_de_x, axis=1)
+    print()
+    print(f'Nova população {nova_populacao}')
+    print()
+    ajuste = numpy.divide(nova_populacao, valores_de_x)#, axis=1)
+    print()
+    print(f'Ajuste {ajuste}')
+    print()
     return ajuste
 
 
@@ -51,7 +56,7 @@ def mutacao(varios_cruzamentos, num_mutacao=1):
 valores_de_x = [3, 1, 4, 4, 1]
 pesos_da_equacao = len(valores_de_x)
 
-solucao_por_populacao = 8
+solucao_por_populacao = 5
 acasalamento = 4
 
 # Definindo o tamanho da população.
@@ -62,7 +67,7 @@ nova_populacao = numpy.random.uniform(low=1, high=12.0, size=tam_populacao)
 print(nova_populacao)
 
 melhores = []
-geracoes = 10000
+geracoes = 1
 for geracao in range(geracoes):
     print("Geracao : ", geracao)
     # Medir o ajuste de cada cromossomo na população. A operação é para ser "genérica"

@@ -19,6 +19,9 @@ print(f'População inicial (random) {s0}')
 #            0, 0, 0, 1])  # Estado inicial
 
 M = 1000  # Numero de geração #Matteus Vargas: quero deixar esse valor aberto, só preciso achar uma forma de parada
+          # Stéfani: Talvez possamos fazer uma condição de parada onde avaliamos a porcentagem da melhora do resultado com relação aos anteriores.
+          #          Se for um valor abaixo de uma porcentagem que iremos definir, daí paramos.
+
 score = []  # melhor resultado da função objetiva
 score_fit = []  # Armazena o melhor da geração
 
@@ -38,6 +41,7 @@ for i in range(M):
     cromosome = []  # Guarda os cromossomos com crossover
     fit = []  # Guarda saída da função objetiva
     variables = []  # Guarda a saída de cada variável
+
     for j in range(len(s0) // 2 + 1):  # Rotaciona até dar uma volta completa
         v = cromo(s0)  # quebra em quatro partes
         temp_max = fy(v[0], v[1], v[2], v[3])  # Retorna a função objetiva
@@ -51,12 +55,16 @@ for i in range(M):
             np.random.shuffle(v[pos])  # Embaralha os bits de umas da variável
         s0 = list(v[0]) + list(v[1]) + list(v[2]) + list(v[3])  # junta partes
         s0 = np.roll(s0, -2)  # Faz crossover
+
     nextGen = np.argmax(fit)  # Pega o melhor resultado para próxima geração
     score.append(np.max(fit))  # Armazena a melhor função obj
     score_fit.append(cromosome[nextGen])  # Armazena o melhor cromossomo
+
     if np.median(fit) == np.max(fit):
-        # Se  resultado do melhor cromossomo repetir ele escolhe um aleatório
-        # Faz mudatação em uma das posições  do cromossomo
+        # Se o resultado do melhor cromossomo repetir ele escolhe um aleatório
+        # Stéfani: em vez de usar um aleatório, não é possível escolher o segundo melhor? Faz sentido?
+        
+        # Faz mutação em uma das posições do cromossomo
         s0 = cromosome[np.random.randint(len(fit))]  # sorteia novo cromossomo
         mutate = np.random.randint(len(s0))  # Escolhe uma posição para mutação
         s0[mutate] = 1 if s0[mutate] == 0 else 0  # Troca conteúdo

@@ -11,20 +11,21 @@ fy = lambda x1, x2, x3, x4: 5 * fc(x1, exp) - 3 * fc(x2, exp) * fc(x3, exp) \
                             + fc(x3, exp) - 2 * fc(x4, exp)  # função objetiva
 # Matteus Vargas: o fy é o cara que preciso ficar modificando. Só preciso entender melhor os detalhes aqui
 
-# s0 = np.random.randint(2,size=16)  # Matteus Vargas: deixei a população inicial aleatória. Vou trocar isso para entrada do usuário
-s0 = np.array([0, 1, 1, 0,
-               1, 1, 0, 0,
-               1, 0, 1, 1,
-               0, 0, 0, 1])  # Estado inicial
+s0 = np.random.randint(2,
+                       size=16)  # Matteus Vargas: deixei a população inicial aleatória. Vou trocar isso para entrada do usuário
+# s0 = np.array([0, 1, 1, 0,
+#                1, 1, 0, 0,
+#                1, 0, 1, 1,
+#                0, 0, 0, 1])  # Estado inicial
 
-print(f'População inicial (random) {s0}')
-M = 0  # 3 * 4 * 5 * 6 * 12
-print(f'M {M}')
+print(f'População inicial {s0}')
+
 # Numero de geração #Matteus Vargas: quero deixar esse valor aberto, só preciso achar uma forma de parada
 # Stéfani: Talvez possamos fazer uma condição de parada onde avaliamos a porcentagem da melhora do resultado com relação aos anteriores.
 #          Se for um valor abaixo de uma porcentagem que iremos definir, daí paramos.
 # Matteus Vargas: estou pensando em deixar como no artigo, um multiplicativo dos valores
 # dos limites superiores associado à cada variável
+
 score = []  # melhor resultado da função objetiva
 score_fit = []  # Armazena o melhor da geração
 evolucao = []
@@ -40,6 +41,15 @@ def cromo(s0):
     return vet
 
 
+def estima_geracoes(s0):
+    v = cromo(s0)  # quebra em quatro partes
+    cod_pop = int(np.sum([fc(v[0], exp), fc(v[1], exp), fc(v[2], exp), fc(v[3], exp)]))
+    return abs(cod_pop ** (high_bound // 2))
+
+
+M = estima_geracoes(s0)
+print(f'M {M}')
+
 # Matteus Vargas: vou arrumar uma maneira de particionar as operações de GA em defs e colocar em outro arquivo. Deixar esse só para elaborar a função em si
 
 # while (evolucao < 100):
@@ -49,16 +59,12 @@ def cromo(s0):
 # for i in range(M):
 teste_fitness = 0
 for i in range(M):
-    print(f'Geração {M}')
     cromosome = []  # Guarda os cromossomos com crossover
     variables = []  # Guarda a saída de cada variável
     fit = []  # Guarda saída da função objetiva
     for j in range(len(s0) // 2 + 1):  # Rotaciona até dar uma volta completa
         v = cromo(s0)  # quebra em quatro partes
         temp_max = fy(v[0], v[1], v[2], v[3])  # Retorna a função objetiva
-        print()
-        print(f'Temp Max {temp_max}')
-        print()
         fit.append(temp_max)  # guarda função objetiva
         cromosome.append(s0)  # guarda o cromossomo
         variables.append([fc(v[0], exp), fc(v[1], exp),

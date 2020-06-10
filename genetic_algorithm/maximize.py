@@ -4,7 +4,7 @@ def ajuste_da_populacao(valores_de_x, nova_populacao):
     print()
     print(f'Nova população {nova_populacao}')
     print()
-    ajuste = numpy.divide(nova_populacao, valores_de_x)#, axis=1)
+    ajuste = numpy.sum(nova_populacao, valores_de_x)#, axis=1)
     print()
     print(f'Ajuste {ajuste}')
     print()

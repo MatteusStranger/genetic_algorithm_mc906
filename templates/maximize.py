@@ -48,7 +48,7 @@ def cromo(s0):
 # estimar uma quantidade de gerações.
 # for i in range(M):
 teste_fitness = 0
-while teste_fitness < 100:
+for i in range(M):
     print(f'Geração {M}')
     cromosome = []  # Guarda os cromossomos com crossover
     variables = []  # Guarda a saída de cada variável
@@ -56,6 +56,9 @@ while teste_fitness < 100:
     for j in range(len(s0) // 2 + 1):  # Rotaciona até dar uma volta completa
         v = cromo(s0)  # quebra em quatro partes
         temp_max = fy(v[0], v[1], v[2], v[3])  # Retorna a função objetiva
+        print()
+        print(f'Temp Max {temp_max}')
+        print()
         fit.append(temp_max)  # guarda função objetiva
         cromosome.append(s0)  # guarda o cromossomo
         variables.append([fc(v[0], exp), fc(v[1], exp),
@@ -74,16 +77,13 @@ while teste_fitness < 100:
     if np.median(fit) == np.max(fit):
         # Se o resultado do melhor cromossomo repetir ele escolhe um aleatório
         # Stéfani: em vez de usar um aleatório, não é possível escolher o segundo melhor? Faz sentido?
-
         # Faz mutação em uma das posições do cromossomo
-        s0 = cromosome[
-            1]  # sorteia novo cromossomo #Matteus Vargas: testando com o método de pegar o segundo melhor, que seria a posição 1 do array
+        s0 = cromosome[1]  # sorteia novo cromossomo
+        # #Matteus Vargas: testando com o método de pegar o segundo melhor, que seria a posição 1 do array
         mutate = np.random.randint(len(s0))  # Escolhe uma posição para mutação
         s0[mutate] = 1 if s0[mutate] == 0 else 0  # Troca conteúdo
     else:
         s0 = cromosome[nextGen]
-    teste_fitness = np.min(fit) // np.max(fit)
-    M += 1
 
 best = score_fit[np.argmax(score)]
 best_varb = cromo(best)
@@ -95,5 +95,5 @@ print(f'Best cromosome {best}')
 print()
 print(f'Best combination of variables {best_var}')
 
-plt.plot(score)
-plt.savefig('graphics.png')
+# plt.plot(score)
+# plt.savefig('graphics.png')

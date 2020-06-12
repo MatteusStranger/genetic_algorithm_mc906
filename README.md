@@ -54,6 +54,11 @@ conda activate mo416_project2
 pip install -r requirements.txt
 `````
 
+#### Install repository package
+`````powershell
+pip install -e extra_lib/
+````
+
 #### Run using python
 `````powershell
 python main.py

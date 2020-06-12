@@ -44,7 +44,12 @@ def cromo(s0):
 def estima_geracoes(s0):
     v = cromo(s0)  # quebra em quatro partes
     cod_pop = int(np.sum([fc(v[0], exp), fc(v[1], exp), fc(v[2], exp), fc(v[3], exp)]))
-    return abs(cod_pop ** (high_bound // 2))
+    # No final das contas, esse cara vai gerar a função em cima dos valores da população inicial
+    # Como só a população pode dar um valor baixo, então elevamos ele à outro valor em função
+    # do limite superior, gerando uma quantidade minimamente boa de gerações.
+    # Com poucas gerações, pode não se alcançar um valor aceitável.
+    # Se forem muitas, ele fica processando demais.
+    return abs(cod_pop ** (low_bound * 3))
 
 
 M = estima_geracoes(s0)
@@ -101,5 +106,5 @@ print(f'Best cromosome {best}')
 print()
 print(f'Best combination of variables {best_var}')
 
-# plt.plot(score)
-# plt.savefig('graphics.png')
+plt.plot(score)
+plt.savefig('graphics.png')

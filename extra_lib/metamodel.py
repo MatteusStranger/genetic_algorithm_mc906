@@ -1,15 +1,3 @@
-__author__ = "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"
-__copyright__ = "Sponsor by FAPEMIG from 2017 - 2019, Project: Utilização de métodos de metamodelagem para resolução de problemas complexos em otimização via simulação"
-__credits__ = [
-    "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"
-]
-__license__ = "MIT"
-__version__ = "0.1.0"
-__cite__ = "http://www.fmepro.org/XP/XP-EasyArtigos/Site/Uploads/Evento21/TrabalhosCompletosDOC/VII-030.pdf"
-
-# This is a new version using pytorch instead C#(deprecated AForge). Was made 100% by Christian Hideki Maekawa. 
-# Inspired and researched with Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes
-
 import torch
 import torch.nn as nn
 import pandas as pd
@@ -18,10 +6,12 @@ import matplotlib.pyplot as plt
 from pandas.plotting import scatter_matrix
 from sklearn.model_selection import train_test_split
 from pathlib import Path
+
+
 class metamodel:
     def __init__(self, file_name="./datasets/data.csv"):
         self.file_name = file_name
-        self.df = self.load_dataframe(Path.cwd() /file_name)
+        self.df = self.load_dataframe(Path.cwd() / file_name)
         self.model = None
         self.train_losses = []
         self.test_losses = []
@@ -68,7 +58,7 @@ class metamodel:
     def split_data(self, X, y, test_size=0.8):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
         return X_train, X_test, y_train, y_test
-    
+
     def fit(self, mid_layer=5, epochs=1000, learning_rate=0.01):
 
         def train(model, criterion, optimizer, X_train, y_train, epochs=1000):
@@ -88,7 +78,7 @@ class metamodel:
                 test_losses[it] = loss_test.item()
             if (it + 1) % 50 == 0:
                 print(
-                    f"Epoch {it+1}/epochs, Train Loss: {loss.item():.4f} Test Loss: {loss_test.item():.4f}"
+                    f"Epoch {it + 1}/epochs, Train Loss: {loss.item():.4f} Test Loss: {loss_test.item():.4f}"
                 )
             self.model = model
             return train_losses, test_losses
@@ -126,18 +116,18 @@ class metamodel:
 
     def train_performance(self):
         if (
-            (self.model != None)
-            or (len(self.train_losses) != 0)
-            or (len(self.test_losses) != 0)
+                (self.model != None)
+                or (len(self.train_losses) != 0)
+                or (len(self.test_losses) != 0)
         ):
             plt.plot(self.train_losses)
             plt.plot(self.test_losses)
             plt.show()
         else:
             assert (
-                (self.model != None)
-                or (len(self.train_losses) != 0)
-                or (len(self.test_losses) != 0)
+                    (self.model != None)
+                    or (len(self.train_losses) != 0)
+                    or (len(self.test_losses) != 0)
             ), f"Apply fit before run performance."
 
     def model_peformance(self):
@@ -150,7 +140,7 @@ class metamodel:
                 plt.show()
         else:
             assert (
-                (self.model != None)
-                or (len(self.train_losses) != 0)
-                or (len(self.test_losses) != 0)
+                    (self.model != None)
+                    or (len(self.train_losses) != 0)
+                    or (len(self.test_losses) != 0)
             ), f"Apply fit before run performance."

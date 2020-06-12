@@ -41,28 +41,8 @@ def cromo(s0):
     return vet
 
 
-def estima_geracoes(s0):
-    v = cromo(s0)  # quebra em quatro partes
-    cod_pop = int(np.sum([fc(v[0], exp), fc(v[1], exp), fc(v[2], exp), fc(v[3], exp)]))
-    # No final das contas, esse cara vai gerar a função em cima dos valores da população inicial
-    # Como só a população pode dar um valor baixo, então elevamos ele à outro valor em função
-    # do limite superior, gerando uma quantidade minimamente boa de gerações.
-    # Com poucas gerações, pode não se alcançar um valor aceitável.
-    # Se forem muitas, ele fica processando demais.
-    return abs(cod_pop ** (low_bound * 3))
+M = 1000
 
-
-M = estima_geracoes(s0)
-print(f'M {M}')
-
-# Matteus Vargas: vou arrumar uma maneira de particionar as operações de GA em defs e colocar em outro arquivo. Deixar esse só para elaborar a função em si
-
-# while (evolucao < 100):
-# Matteus Vargas: devem ser dois laços. O mais externo, monta a função.
-# o segundo roda ela através das gerações. Sobre as gerações, vou criar uma função para
-# estimar uma quantidade de gerações.
-# for i in range(M):
-teste_fitness = 0
 for i in range(M):
     cromosome = []  # Guarda os cromossomos com crossover
     variables = []  # Guarda a saída de cada variável

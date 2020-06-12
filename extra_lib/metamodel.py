@@ -43,12 +43,12 @@ class metamodel:
                 ax.yaxis.label.set_rotation(0)
                 # to make sure y axis names are outside the plot area
                 ax.yaxis.labelpad = 50
-        plt.show()
+        # plt.show()
 
     def plot_distributions(self):
         plt.rcParams["figure.figsize"] = [15, 15]
         self.df.hist()
-        plt.show()
+        # plt.show()
 
     def get_data(self):
         X = self.df.iloc[:, 0:5].values
@@ -122,7 +122,7 @@ class metamodel:
         ):
             plt.plot(self.train_losses)
             plt.plot(self.test_losses)
-            plt.show()
+            # plt.show()
         else:
             assert (
                     (self.model != None)
@@ -137,7 +137,7 @@ class metamodel:
                 y_pred = self.predict(self.X_test)
                 plt.scatter(line_x, self.y_test, label="Expected")
                 plt.scatter(line_x, y_pred, label="Predicted")
-                plt.show()
+                # plt.show()
         else:
             assert (
                     (self.model != None)

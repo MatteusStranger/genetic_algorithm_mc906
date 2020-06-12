@@ -3,8 +3,8 @@
 import setuptools
 
 setuptools.setup(
-      name='gen_fun',
-      version='0.0.0',
+      name='extra_lib',
+      version='0.1.0',
       description='Create function using genetic programming',
       packages=setuptools.find_packages(),
       classifiers=[

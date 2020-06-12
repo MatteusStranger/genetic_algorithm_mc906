@@ -20,8 +20,8 @@ VOLUME [ ":/app" ]
 EXPOSE 8888
 
 RUN cd /usr/local/lib/python3.7/site-packages && \
-    python /app/gen_function/setup.py develop
+    python /app/extra_lib/setup.py develop
 
-RUN pip install -e gen_function/
+RUN pip install -e extra_lib/
 
 CMD ["/bin/bash"]

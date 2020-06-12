@@ -12,3 +12,6 @@ test.model_peformance()
 print(test.predict([1, 1, 1, 1, 1]))
 
 print(test.predict(np.array([1, 1, 1, 1, 1])))
+
+
+

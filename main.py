@@ -9,90 +9,84 @@ test.fit()
 test.train_performance()
 test.model_peformance()
 
+import random
+
 best = -100000
 populations = ([[random.randint(1, 12) for x in range(5)] for i in range(4)])
+print()
 parents = []
-melhores_fitness = []
+new_populations = []
+melhores_scores = []
 melhores_cromossomos = []
-print(populations)
+print(f'População inicial: {populations}')
 
 
 def fitness_score():
-    global populations, best, best_cromossomo, scores, cromossomos, melhores_fitness, melhores_cromossomos
-    cromossomos = []
-    scores = []
+    global populations, best, melhores_scores, melhores_cromossomos
+    fit_value = []
     for i in range(len(populations)):
-        scores.append(test.predict(populations[i]))
+        fit_value.append(test.predict(populations[i]))
+    print(fit_value)
 
-    best = np.max(scores)
-
-    melhores_fitness.append(best)
-    melhores_cromossomos.append(populations[scores.index(best)])
-
-    worst = np.min(scores)
-    print(f'Melhores scores linha 33: {melhores_fitness}')
-    print(f'Melhores cromossomos linha 34: {populations[scores.index(best)]}')
-    cromossomos.append(populations[scores.index(best)])
-    cromossomos.append(populations[scores.index(worst)])
-    # best_cromossomo = populations[scores.index(best)]
+    fit_value, populations = zip(*sorted(zip(fit_value, populations), reverse=True))
+    best = fit_value[0]
+    print()
+    print(f'Melhor Fitness da geração {best}')
+    print(f'Melhor cromossomo da geração {populations[0]}')
+    melhores_scores.append(best)
+    melhores_cromossomos.append(populations[0])
 
 
 def selectparent():
-    global parents, cromossomos
+    global parents
     # global populations , parents
-    parents = cromossomos[0:2]
+    parents = populations[0:2]
     print()
-    print(f'Pais escolhidos: {parents}')
+    print(f'Pais selecionados {parents}')
 
 
 def crossover():
-    global parents, pais
-    pais = []
-    cross_point = random.randint(0, 4)
+    global parents
 
-    pais.append(tuple([parents[0][0:cross_point + 1] + parents[1][cross_point + 1:6]]))
-    pais.append(tuple([parents[1][0:cross_point + 1] + parents[0][cross_point + 1:6]]))
+    cross_point = random.randint(0, 4)
+    parents = parents + tuple([(parents[0][0:cross_point + 1] + parents[1][cross_point + 1:6])])
+    parents = parents + tuple([(parents[2][0:cross_point + 1] + parents[1][cross_point + 1:6])])
     print()
-    print(f'Crossover feito {pais}')
-    print()
+    print(f'Crossover: {parents}')
 
 
 def mutation():
-    global populations, pais
+    global populations, parents
+    print(f'População antiga pós-crossover: {populations}')
+    mute = random.randint(0, 49) # Taxa de mutação
 
-    print(f'Iniciando a mutação nos pais: {pais}')
-
-    x = random.randint(0, 4)
-    y = random.randint(0, 4)
-
-    mae = pais[0][0]
-    pai = pais[1][0]
+    print(f'População 64 {populations}')
+    if mute == 20:
+        x = random.randint(0, 3)
+        y = random.randint(0, 4)
+        parents[x][y] = random.randint(1,12)
+    populations = parents
     print()
-
-    mae[y] = random.randint(1, 12)
-    pai[x] = random.randint(1, 12)
-
-    print(f'Mae mutante {mae}')
-    print(f'Pai mutante {pai}')
-    print()
-    populations.append(mae)
-    populations.append(pai)
-    print(f'Nova população: {populations}')
+    print(f'População pós-mutação: {populations}')
 
 
-M = 3
+M = 1
 for i in range(M):
+    print()
     print(f'Geração {i}')
     fitness_score()
     selectparent()
     crossover()
     mutation()
-    print()
-    print(f'Melhores scores da geração: {melhores_fitness}')
-    print(f'Melhores cromossomos da geração: {melhores_cromossomos}')
-    print()
 
+print()
+print(f'Melhores fitness {melhores_scores}')
+print()
+print(f'Melhores cromossomos {melhores_cromossomos}')
+print()
 print("best score :")
 print(best)
+print()
 print("sequence........")
 print(populations[0])
+print()

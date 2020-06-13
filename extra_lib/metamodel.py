@@ -108,6 +108,7 @@ class metamodel:
         with torch.no_grad():
             if type(X_test) == list:
                 X_test = torch.from_numpy(np.array([X_test]).astype(np.float32))
+                print(X_test)
             if type(X_test) == np.ndarray:
                 X_test = torch.from_numpy(X_test.astype(np.float32))
             y_pred = self.model(X_test)

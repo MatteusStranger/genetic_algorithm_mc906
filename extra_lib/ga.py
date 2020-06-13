@@ -1,6 +1,5 @@
 import numpy
 
-
 def adjust(valores_de_x, nova_populacao):
     print()
     print(f'Nova população {nova_populacao}')

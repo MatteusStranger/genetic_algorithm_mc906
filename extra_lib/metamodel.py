@@ -1,3 +1,14 @@
+__author__ = "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"	
+__copyright__ = "Sponsor by FAPEMIG from 2017 - 2019, Project: Utilização de métodos de metamodelagem para resolução de problemas complexos em otimização via simulação"	
+__credits__ = [	
+    "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"	
+]	
+__license__ = "MIT"	
+__version__ = "0.1.0"	
+__cite__ = "http://www.fmepro.org/XP/XP-EasyArtigos/Site/Uploads/Evento21/TrabalhosCompletosDOC/VII-030.pdf"	
+
+# This is a new version using pytorch instead C#(deprecated AForge). Was made 100% by Christian Hideki Maekawa. 	
+# Inspired and researched with Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes
 import torch
 import torch.nn as nn
 import pandas as pd

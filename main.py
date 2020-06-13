@@ -3,12 +3,28 @@ import random
 
 # As próximas cinco linhas referem-se à criação, ajuste e treinamento da rede neural que
 # serve como metamodelo para este problema. Sua operação de predição será o nosso fitness
-print('-------------------------------------- Instanciando o metamodelo --------------------------------------')
-test = mmodel.metamodel()
-test.cuda_status()
-test.fit()
-test.train_performance()
-test.model_peformance()
+print(
+    "Matias Vargas Maekawa Fernandes Moraes e Silva (MVMFMS) é um diretor de hospital que visa atender o máximo de pacientes possível em sua unidade hospitalar.")
+print("Para isso, ele precisa saber quantos funcionarios ele deverá contratar e qual o seu ganho com isso.")
+print(
+    "A sua equipe técnica projetou uma solução que toma a quantidade de recepcionistas, técnicos, médicos, enfermeiras na sala de tratamento e enfermeiras na sala de emergência, sendo representadas respectivamente pelas variáveis x1, x2, x3, x4, x5.")
+print("Este problema é baseado em um caso real definido no trabalho de Ahmed e Alkhamis (2009).")
+print("Será agora instanciado um metamodelo, baseado em redes neurais, que consome um dataset coletado para este caso.")
+print(
+    "Em seguida, o algoritmo genético desenvolvido deverá maximizar as entradas a fim de definir os melhores valores possíveis para cada variável.")
+
+print()
+print("Pressione 1 para continuar e 0 para abortar")
+print()
+segue = int(input())
+
+if (segue == 1):
+    print('-------------------------------------- Instanciando o metamodelo --------------------------------------')
+    test = mmodel.metamodel()
+    test.cuda_status()
+    test.fit()
+    test.train_performance()
+    test.model_peformance()
 
 # Instanciação das variáveis globais principais
 best = -100000
@@ -120,34 +136,36 @@ def ajusta_populacao():
                 populations[i][x] = random.randint(10, 12)
 
 
-M = generations()
-ajusta_populacao()  # O ajuste aqui serve para corrigir falhas que possa ter ocorrido na criação
-# da população inicial, em função dos limites superiores de cada variável
-for i in range(M):
-    print()
-    print()
-    print(f'-------------------------------------- Iniciando o AG, geração {i} --------------------------------------')
-    print()
-    print()
-    print(f'População inicial da geração {i}: {populations}')
-    print()
-    print('-------------------------------------- Aplicando o fitness --------------------------------------')
-    fitness_score()
-    print()
-    print('-------------------------------------- Selecionando os pais --------------------------------------')
-    selectparent()
-    print()
-    print('-------------------------------------- Aplicando o crossover --------------------------------------')
-    print()
-    crossover()
-    print('-------------------------------------- Aplicando a mutação --------------------------------------')
-    mutation()
-    print()
+if (segue == 1):
+    M = generations()
+    ajusta_populacao()  # O ajuste aqui serve para corrigir falhas que possa ter ocorrido na criação
+    # da população inicial, em função dos limites superiores de cada variável
+    for i in range(M):
+        print()
+        print()
+        print(
+            f'-------------------------------------- Iniciando o AG, geração {i} --------------------------------------')
+        print()
+        print()
+        print(f'População inicial da geração {i}: {populations}')
+        print()
+        print('-------------------------------------- Aplicando o fitness --------------------------------------')
+        fitness_score()
+        print()
+        print('-------------------------------------- Selecionando os pais --------------------------------------')
+        selectparent()
+        print()
+        print('-------------------------------------- Aplicando o crossover --------------------------------------')
+        print()
+        crossover()
+        print('-------------------------------------- Aplicando a mutação --------------------------------------')
+        mutation()
+        print()
 
-print()
-# Informa para o usuário os resultados
-melhores_scores, melhores_cromossomos = zip(*sorted(zip(melhores_scores, melhores_cromossomos), reverse=True))
-print(f'Melhor fitness {melhores_scores[0]}')
-print()
-print(f'Melhor cromossomo {melhores_cromossomos[0]}')
-print()
+    print()
+    # Informa para o usuário os resultados
+    melhores_scores, melhores_cromossomos = zip(*sorted(zip(melhores_scores, melhores_cromossomos), reverse=True))
+    print(f'Melhor fitness {melhores_scores[0]}')
+    print()
+    print(f'Melhor cromossomo {melhores_cromossomos[0]}')
+    print()

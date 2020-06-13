@@ -1,22 +1,7 @@
 import extra_lib.metamodel as mmodel
 import numpy as np
 import matplotlib.pyplot as plt
-
-score = []  # melhor resultado da função objetiva
-score_fit = []  # Armazena o melhor da geração
-evolucao = []
-
-
-def cromo(s0):
-    """ Separa cromossomo em 4 partes"""
-    vet = []
-    vet.append(s0[0:5])
-    vet.append(s0[5:10])
-    vet.append(s0[10:15])
-    vet.append(s0[15:20])
-    vet.append(s0[20:])
-    return vet
-
+import random
 
 test = mmodel.metamodel()
 test.cuda_status()
@@ -24,44 +9,60 @@ test.fit()
 test.train_performance()
 test.model_peformance()
 
-s0 = np.random.randint(13,
-                       size=25)
+best = -100000
+populations = ([[random.randint(1, 12) for x in range(5)] for i in range(4)])
+parents = []
+new_populations = []
+print(populations)
 
-M = 1
 
-for i in range(M):
-    cromosome = []  # Guarda os cromossomos com crossover
-    fit = []  # Guarda saída da função objetiva
-    for j in range(len(s0)):
-        v = cromo(s0)  # quebra em quatro partes
-        for n in range(5):
-            temp_max = test.predict(v[i])
-            fit.append(temp_max)  # guarda função objetiva
-        cromosome.append(s0)  # guarda o cromossomo
+def fitness_score():
+    global populations, best, best_cromossomo, scores
+    scores = []
+    for i in range(len(populations)):
+        scores.append(test.predict(populations[i]))
 
-        if (np.median(fit) == np.max(fit)):
-            # mutação se função obj negativa resultado repetido
-            pos = np.random.randint(5)  # Escolhe uma das 4 variáveis
-            np.random.shuffle(v[pos])  # Embaralha os bits de umas da variável
-        s0 = list(v[0]) + list(v[1]) + list(v[2]) + list(v[3])  # junta partes
-        s0 = np.roll(s0, -2)  # Faz crossover
-        print(f'Novo s0 {s0}')
+    best = np.max(scores)
+    best_cromossomo = populations[scores.index(best)]
 
-    nextGen = np.argmax(fit)  # Pega o melhor resultado para próxima geração
-    score.append(np.max(fit))  # Armazena a melhor função obj
-    score_fit.append(cromosome[nextGen])  # Armazena o melhor cromossomo
 
-    if np.median(fit) == np.max(fit):
-        # Se o resultado do melhor cromossomo repetir ele escolhe um aleatório
-        # Stéfani: em vez de usar um aleatório, não é possível escolher o segundo melhor? Faz sentido?
-        # Faz mutação em uma das posições do cromossomo
-        s0 = cromosome[1]  # sorteia novo cromossomo
-        # #Matteus Vargas: testando com o método de pegar o segundo melhor, que seria a posição 1 do array
-        mutate = np.random.randint(len(s0))  # Escolhe uma posição para mutação
-        s0[mutate] = 1 if s0[mutate] == 0 else 0  # Troca conteúdo
-    else:
-        s0 = cromosome[nextGen]
+def selectparent():
+    global parents
+    # global populations , parents
+    parents = populations[0:2]
 
-best = score_fit[np.argmax(score)]
-best_varb = cromo(best)
-print(f'Best cromosome {best_varb}')
+
+def crossover():
+    global parents, pais
+    pais = []
+    cross_point = random.randint(0, 4)
+
+    pais.append(tuple([parents[0][0:cross_point + 1] + parents[1][cross_point + 1:6]]))
+    pais.append(tuple([parents[1][0:cross_point + 1] + parents[0][cross_point + 1:6]]))
+    print(f'Pais {pais}')
+
+
+def mutation():
+    global populations, pais
+    x = random.randint(0, 4)
+    y = random.randint(0, 4)
+    print(f'X {x} Y {y}')
+    mae = pais[0][0]
+    pai = pais[1][0]
+    print(f'Mae {mae[y]}')
+    print(f'Pai {pai[x]}')
+    populations.append(mae)
+    populations.append(pai)
+    print(f'Populações {populations}')
+
+
+for i in range(1):
+    fitness_score()
+    selectparent()
+    crossover()
+    mutation()
+
+print("best score :")
+print(best)
+print("sequence........")
+print(populations[0])

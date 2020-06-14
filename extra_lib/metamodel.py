@@ -1,11 +1,11 @@
-__author__ = "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"	
-__copyright__ = "Sponsor by FAPEMIG from 2017 - 2019, Project: Utilização de métodos de metamodelagem para resolução de problemas complexos em otimização via simulação"	
-__credits__ = [	
-    "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"	
-]	
-__license__ = "MIT"	
-__version__ = "0.1.0"	
-__cite__ = "http://www.fmepro.org/XP/XP-EasyArtigos/Site/Uploads/Evento21/TrabalhosCompletosDOC/VII-030.pdf"	
+__author__ = "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"
+__copyright__ = "Sponsor by FAPEMIG from 2017 - 2019, Project: Utilização de métodos de metamodelagem para resolução de problemas complexos em otimização via simulação"
+__credits__ = [
+    "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"
+]
+__license__ = "MIT"
+__version__ = "0.1.0"
+__cite__ = "http://www.fmepro.org/XP/XP-EasyArtigos/Site/Uploads/Evento21/TrabalhosCompletosDOC/VII-030.pdf"
 
 # This is a new version using pytorch instead C#(deprecated AForge). Was made 100% by Christian Hideki Maekawa. 	
 # Inspired and researched with Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes
@@ -54,12 +54,12 @@ class metamodel:
                 ax.yaxis.label.set_rotation(0)
                 # to make sure y axis names are outside the plot area
                 ax.yaxis.labelpad = 50
-        # plt.show()
+        # #plt.show()
 
     def plot_distributions(self):
-        plt.rcParams["figure.figsize"] = [15, 15]
+        # plt.rcParams["figure.figsize"] = [15, 15]
         self.df.hist()
-        # plt.show()
+        # #plt.show()
 
     def get_data(self):
         X = self.df.iloc[:, 0:5].values
@@ -119,37 +119,37 @@ class metamodel:
         with torch.no_grad():
             if type(X_test) == list:
                 X_test = torch.from_numpy(np.array([X_test]).astype(np.float32))
-                print(X_test)
+                # print(X_test)
             if type(X_test) == np.ndarray:
                 X_test = torch.from_numpy(X_test.astype(np.float32))
             y_pred = self.model(X_test)
             y_pred = y_pred.numpy()
         return y_pred
 
-    def train_performance(self):
-        if (
-                (self.model != None)
-                or (len(self.train_losses) != 0)
-                or (len(self.test_losses) != 0)
-        ):
-            plt.plot(self.train_losses)
-            plt.plot(self.test_losses)
-            # plt.show()
-        else:
-            assert (
-                    (self.model != None)
-                    or (len(self.train_losses) != 0)
-                    or (len(self.test_losses) != 0)
-            ), f"Apply fit before run performance."
+    # def train_performance(self):
+        # if (
+        #         (self.model != None)
+        #         or (len(self.train_losses) != 0)
+        #         or (len(self.test_losses) != 0)
+        # ):
+        # # plt.plot(self.train_losses)
+        # # plt.plot(self.test_losses)
+        # # #plt.show()
+        # else:
+        #     assert (
+        #             (self.model != None)
+        #             or (len(self.train_losses) != 0)
+        #             or (len(self.test_losses) != 0)
+        #     ), f"Apply fit before run performance."
 
     def model_peformance(self):
         if self.model != None:
             with torch.no_grad():
                 line_x = np.linspace(0, len(self.X_test), len(self.X_test))
                 y_pred = self.predict(self.X_test)
-                plt.scatter(line_x, self.y_test, label="Expected")
-                plt.scatter(line_x, y_pred, label="Predicted")
-                # plt.show()
+                # plt.scatter(line_x, self.y_test, label="Expected")
+                # plt.scatter(line_x, y_pred, label="Predicted")
+                # #plt.show()
         else:
             assert (
                     (self.model != None)

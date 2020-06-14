@@ -1,4 +1,3 @@
-import tools.report as rep
 import extra_lib.metamodel as mmodel
 import matplotlib.pyplot as plt
 import numpy
@@ -22,15 +21,13 @@ print("Pressione 1 para continuar e 0 para abortar")
 print()
 segue = int(input())
 
-
 if (segue == 1):
-    rep.write_text('-------------------------------------- Instanciando o metamodelo --------------------------------------')
+    print('-------------------------------------- Instanciando o metamodelo --------------------------------------')
     test = mmodel.metamodel()
     test.cuda_status()
     test.fit()
-    test.train_performance()
+    # test.train_performance()
     test.model_peformance()
-
 
 # Instanciação das variáveis globais principais
 best = -100000
@@ -51,18 +48,18 @@ def generations():
 def fitness_score():  # Aqui são eleitos os cromossomos com os melhores desempenhos de sua geração
     global populations, best, melhores_scores, melhores_cromossomos, scores, geracoes
     fit_value = []
-    rep.write_text()
+    print()
     for i in range(len(populations)):
         fit_value.append(
             test.predict(populations[i]))  # Aqui é aplicada a predição com cada um dos cromossomos da população.
         # Seu resultado é guardado em uma lista
 
-    rep.write_text(f'Valores de fitness: {fit_value}')
-    rep.write_text()
+    print(f'Valores de fitness: {fit_value}')
+    print()
     fit_value, populations = zip(*sorted(zip(fit_value, populations),
                                          reverse=True))  # Associa-se os melhores cromossomos aos seus scores, ordenado pelo score
     best = fit_value[0]  # Variável que guarda o melhor desempenho da geração
-    rep.write_text(
+    print(
         f'População ordenada por score: {populations}')  # População ordenada pelo score, do melhor ao pior. Esse esquema será base para o crossover
     scores.append(best)
     melhores_scores.append(best)  # Guardam os scores ordenados
@@ -72,17 +69,15 @@ def fitness_score():  # Aqui são eleitos os cromossomos com os melhores desempe
 def selectparent():  # Escolhem-se os pais
     global parents, populations
     parents.clear()
-    # Nesse esquema, por ser uma população de tamanho par, então fecham-se casais
-    # O crossover se dá pelo cruzamento do melhor com o pior
-    # e do segundo melhor com o segundo pior.
-    # Neste projeto, não será usado elitismo, portanto
+    # Nesse esquema, por ser uma população para, então fecham-se casais
+    # O crossover se dá pelo cruzamento do melhor com o pior, do segundo melhor com o segundo pior
 
     parents.append(populations[0])
     parents.append(populations[3])
     parents.append(populations[1])
     parents.append(populations[2])
-    rep.write_text(f'Casais formados {parents}')
-    rep.write_text()
+    print(f'Casais formados {parents}')
+    print()
 
 
 def crossover():
@@ -97,8 +92,8 @@ def crossover():
     crossover_results.append(parents[2][0:cross_point + 1] + parents[3][cross_point + 1:])
     crossover_results.append(parents[2][cross_point + 1:] + parents[3][0:cross_point + 1])
 
-    rep.write_text()
-    rep.write_text(f'Crossover feito: {crossover_results}')
+    print()
+    print(f'Crossover feito: {crossover_results}')
 
 
 def mutation():
@@ -107,27 +102,28 @@ def mutation():
     # Apelidado aqui de "correção genética", a mutação anda de gene em gene verificando se
     # O limite superior está correto. Caso não esteja, um novo valor, dentro do seu respectivo
     # limite é sorteado, permitindo que a regra dos limites seja mantida
+    mute = random.randint(0,100)
+    if mute==2:
+        for i in range(4):
+            for x in range(5):
+                if (x == 0 and (crossover_results[i][x] not in range(1, 3))):
+                    crossover_results[i][x] = random.randint(2, 3)
 
-    for i in range(4):
-        for x in range(5):
-            if (x == 0 and (crossover_results[i][x] not in range(1, 3))):
-                crossover_results[i][x] = random.randint(2, 3)
+                if (x == 1 and (crossover_results[i][x] not in range(1, 4))):
+                    crossover_results[i][x] = random.randint(3, 4)
 
-            if (x == 1 and (crossover_results[i][x] not in range(1, 4))):
-                crossover_results[i][x] = random.randint(3, 4)
+                if (x == 2 and (crossover_results[i][x] not in range(1, 5))):
+                    crossover_results[i][x] = random.randint(4, 5)
 
-            if (x == 2 and (crossover_results[i][x] not in range(1, 5))):
-                crossover_results[i][x] = random.randint(4, 5)
+                if (x == 3 and (crossover_results[i][x] not in range(1, 6))):
+                    crossover_results[i][x] = random.randint(5, 6)
 
-            if (x == 3 and (crossover_results[i][x] not in range(1, 6))):
-                crossover_results[i][x] = random.randint(5, 6)
-
-            if (x == 4 and (crossover_results[i][x] not in range(1, 12))):
-                crossover_results[i][x] = random.randint(6, 12)
+                if (x == 4 and (crossover_results[i][x] not in range(1, 12))):
+                    crossover_results[i][x] = random.randint(6, 12)
 
     populations = crossover_results
-    rep.write_text()
-    rep.write_text(f'População pós-mutação: {populations}')
+    print()
+    print(f'População pós-mutação: {populations}')
 
 
 def ajusta_populacao():
@@ -147,47 +143,48 @@ def ajusta_populacao():
 
 
 def plotar_grafico(geracoes, scores):
+    aux = []
+    for i in range(len(scores)):
+        aux.append(float(scores[i]))
+
     plt.xlabel('Gerações')
     plt.ylabel('Fitness')
-    plt.plot(geracoes, scores)
-    rep.write_text(f'Scores {scores}')
-    plt.plot(geracoes,scores)
+    plt.plot(geracoes,aux)
     plt.show()
 
 
 if (segue == 1):
-    rep.clear_report()
     M = generations()
     ajusta_populacao()  # O ajuste aqui serve para corrigir falhas que possa ter ocorrido na criação
     # da população inicial, em função dos limites superiores de cada variável
     for i in range(M):
         geracoes.append(i)
-        rep.write_text()
-        rep.write_text()
-        rep.write_text(
+        print()
+        print()
+        print(
             f'-------------------------------------- Iniciando o AG, geração {i} --------------------------------------')
-        rep.write_text()
-        rep.write_text()
-        rep.write_text(f'População inicial da geração {i}: {populations}')
-        rep.write_text()
-        rep.write_text('-------------------------------------- Aplicando o fitness --------------------------------------')
+        print()
+        print()
+        print(f'População inicial da geração {i}: {populations}')
+        print()
+        print('-------------------------------------- Aplicando o fitness --------------------------------------')
         fitness_score()
-        rep.write_text()
-        rep.write_text('-------------------------------------- Selecionando os pais --------------------------------------')
+        print()
+        print('-------------------------------------- Selecionando os pais --------------------------------------')
         selectparent()
-        rep.write_text()
-        rep.write_text('-------------------------------------- Aplicando o crossover --------------------------------------')
-        rep.write_text()
+        print()
+        print('-------------------------------------- Aplicando o crossover --------------------------------------')
+        print()
         crossover()
-        rep.write_text('-------------------------------------- Aplicando a mutação --------------------------------------')
+        print('-------------------------------------- Aplicando a mutação --------------------------------------')
         mutation()
-        rep.write_text()
+        print()
 
-    rep.write_text()
+    print()
     # Informa para o usuário os resultados
     melhores_scores, melhores_cromossomos = zip(*sorted(zip(melhores_scores, melhores_cromossomos), reverse=True))
     plotar_grafico(geracoes, scores)
-    rep.write_text(f'Melhor fitness {melhores_scores[0]}')
-    rep.write_text()
-    rep.write_text(f'Melhor cromossomo {melhores_cromossomos[0]}')
-    rep.write_text()
+    print(f'Melhor fitness {melhores_scores[0]}')
+    print()
+    print(f'Melhor cromossomo {melhores_cromossomos[0]}')
+    print()

@@ -1,13 +1,13 @@
-__author__ = "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"	
-__copyright__ = "Sponsor by FAPEMIG from 2017 - 2019, Project: Utilização de métodos de metamodelagem para resolução de problemas complexos em otimização via simulação"	
-__credits__ = [	
-    "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"	
-]	
-__license__ = "MIT"	
-__version__ = "0.1.0"	
-__cite__ = "http://www.fmepro.org/XP/XP-EasyArtigos/Site/Uploads/Evento21/TrabalhosCompletosDOC/VII-030.pdf"	
+__author__ = "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"
+__copyright__ = "Sponsor by FAPEMIG from 2017 - 2019, Project: Utilização de métodos de metamodelagem para resolução de problemas complexos em otimização via simulação"
+__credits__ = [
+    "Christian Hideki Maekawa, Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes"
+]
+__license__ = "MIT"
+__version__ = "0.1.0"
+__cite__ = "http://www.fmepro.org/XP/XP-EasyArtigos/Site/Uploads/Evento21/TrabalhosCompletosDOC/VII-030.pdf"
 
-# This is a new version using pytorch instead C#(deprecated AForge). Was made 100% by Christian Hideki Maekawa. 	
+# This is a new version using pytorch instead C#(deprecated AForge). Was made 100% by Christian Hideki Maekawa.
 # Inspired and researched with Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes
 import torch
 import torch.nn as nn
@@ -40,6 +40,7 @@ class metamodel:
         return df
 
     def plot_correlations(self):
+        plt.rcParams["figure.figsize"] = [15, 15]
         x_axis = len(self.df.iloc[:, 0])
         x = np.linspace(0, x_axis, x_axis)
         axs = scatter_matrix(self.df)
@@ -71,7 +72,6 @@ class metamodel:
         return X_train, X_test, y_train, y_test
 
     def fit(self, mid_layer=5, epochs=1000, learning_rate=0.01):
-
         def train(model, criterion, optimizer, X_train, y_train, epochs=1000):
             train_losses = np.zeros(epochs)
             test_losses = np.zeros(epochs)
@@ -89,7 +89,7 @@ class metamodel:
                 test_losses[it] = loss_test.item()
             if (it + 1) % 50 == 0:
                 print(
-                    f"Epoch {it + 1}/epochs, Train Loss: {loss.item():.4f} Test Loss: {loss_test.item():.4f}"
+                    f"Progress {((it + 1)/epochs)*100}%, Train Loss: {loss.item():.4f} Test Loss: {loss_test.item():.4f}"
                 )
             self.model = model
             return train_losses, test_losses
@@ -128,18 +128,18 @@ class metamodel:
 
     def train_performance(self):
         if (
-                (self.model != None)
-                or (len(self.train_losses) != 0)
-                or (len(self.test_losses) != 0)
+            (self.model != None)
+            or (len(self.train_losses) != 0)
+            or (len(self.test_losses) != 0)
         ):
             plt.plot(self.train_losses)
             plt.plot(self.test_losses)
             # plt.show()
         else:
             assert (
-                    (self.model != None)
-                    or (len(self.train_losses) != 0)
-                    or (len(self.test_losses) != 0)
+                (self.model != None)
+                or (len(self.train_losses) != 0)
+                or (len(self.test_losses) != 0)
             ), f"Apply fit before run performance."
 
     def model_peformance(self):
@@ -152,7 +152,7 @@ class metamodel:
                 # plt.show()
         else:
             assert (
-                    (self.model != None)
-                    or (len(self.train_losses) != 0)
-                    or (len(self.test_losses) != 0)
+                (self.model != None)
+                or (len(self.train_losses) != 0)
+                or (len(self.test_losses) != 0)
             ), f"Apply fit before run performance."

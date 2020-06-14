@@ -149,7 +149,7 @@ def ajusta_populacao(populations):
 ajusta_populacao(populations)
 print(f'População inicial {populations}')
 if (segue == 1):
-    M = generations()
+    M = 2000  # generations()
     for i in range(M):
         geracoes.append(i)
         print()

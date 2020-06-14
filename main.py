@@ -85,9 +85,9 @@ def selectparent():  # Escolhem-se os pais
     # O crossover se dá pelo cruzamento do melhor com o pior, do segundo melhor com o segundo pior
 
     parents.append(populations[0])
-    parents.append(populations[3])
     parents.append(populations[1])
     parents.append(populations[2])
+    parents.append(populations[3])
     print(f'Casais formados {parents}')
     print()
 
@@ -114,7 +114,7 @@ def mutation():
     # Apelidado aqui de "correção genética", a mutação anda de gene em gene verificando se
     # O limite superior está correto. Caso não esteja, um novo valor, dentro do seu respectivo
     # limite é sorteado, permitindo que a regra dos limites seja mantida
-    mute = random.randint(0, 100)
+    mute = random.randint(0, 20)
     if mute == 2:
         for i in range(4):
             for x in range(5):

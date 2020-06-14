@@ -13,7 +13,7 @@ fc = lambda x,exp,_type:np.sum(x*2**exp)*quantizations[_type] + low_bounds[_type
 fy = lambda x1,x2,x3,x4,x5: 1.113*fc(x2,exp,1).astype(int) + 0.701*fc(x2,exp,1).astype(int)*fc(x3,exp,2).astype(int) + 0.207*fc(x2,exp,1).astype(int)*fc(x5,exp,4).astype(int) + 0.021*fc(x1,exp,0).astype(int)*fc(x5,exp,4).astype(int) - \
                             0.435*fc(x2,exp,1).astype(int)**2 - 0.013*fc(x2,exp,1).astype(int)*fc(x5,exp,4).astype(int)**2 -0.092*fc(x2,exp,1).astype(int)*fc(x3,exp,2).astype(int)**2
 fm= lambda x1,x2,x3,x4,x5: mm.predict([fc(x1,exp,0).astype(int), fc(x2,exp,1).astype(int), fc(x3,exp,2).astype(int), fc(x3,exp,3).astype(int),fc(x4,exp,4).astype(int)])[0][0]
-s0 = np.array([0,1,1,0, 
+s0 = np.array([0,1,1,0,
                1,1,0,0,
                1,0,1,1,
                0,0,0,1,
@@ -43,7 +43,7 @@ for i in range(M):
         cromosome.append(s0.copy()) # guarda o cromossomo
         variables.append([fc(v[0],exp,0),fc(v[1],exp,1),
                           fc(v[2],exp,2),fc(v[3],exp,3),fc(v[4],exp,4)])# Guarda variáveis
-        if (np.min(temp_max) < 0) | (np.median(fit) == np.max(fit)): 
+        if (np.min(temp_max) < 0) | (np.median(fit) == np.max(fit)):
             # mutação se função obj negativa resultado repetido
             pos = np.random.randint(4) # Escolhe uma das 4 variáveis
             np.random.shuffle(v[pos]) # Embaralha os bits de umas da variável
@@ -65,7 +65,7 @@ plt.plot(score)
 plt.show()
 print(np.max(score))
 
-s0 = np.array([0,1,1,0, 
+s0 = np.array([0,1,1,0,
                1,1,0,0,
                1,0,1,1,
                0,0,0,1,
@@ -85,7 +85,7 @@ for i in range(M):
         cromosome.append(s0.copy()) # guarda o cromossomo
         variables.append([fc(v[0],exp,0),fc(v[1],exp,1),
                           fc(v[2],exp,2),fc(v[3],exp,3),fc(v[4],exp,4)])# Guarda variáveis
-        if (np.min(temp_max) < 0) | (np.median(fit) == np.max(fit)): 
+        if (np.min(temp_max) < 0) | (np.median(fit) == np.max(fit)):
             # mutação se função obj negativa resultado repetido
             pos = np.random.randint(4) # Escolhe uma das 4 variáveis
             np.random.shuffle(v[pos]) # Embaralha os bits de umas da variável

@@ -2,6 +2,7 @@ import extra_lib.metamodel as mmodel
 import matplotlib.pyplot as plt
 import numpy
 import random
+import tools.monitor as monitor
 
 # As próximas cinco linhas referem-se à criação, ajuste e treinamento da rede neural que
 # serve como metamodelo para este problema. Sua operação de predição será o nosso fitness
@@ -26,7 +27,7 @@ if (segue == 1):
     test = mmodel.metamodel()
     test.cuda_status()
     test.fit()
-    test.train_performance()
+    # test.train_performance()
     test.model_peformance()
 
 # Instanciação das variáveis globais principais
@@ -39,6 +40,17 @@ melhores_cromossomos = []  # Eleição dos melhores cromossomos
 crossover_results = []  # Resultado dos crossovers
 scores = []
 geracoes = []
+mem = []
+cpu = []
+pid = []
+
+
+def uso_recursos():
+    global mem, cpu, pid
+    memoria, processador, processos = monitor.monitor()
+    mem.append(memoria)
+    cpu.append(processador)
+    pid.append(processos)
 
 
 def generations():
@@ -73,9 +85,9 @@ def selectparent():  # Escolhem-se os pais
     # O crossover se dá pelo cruzamento do melhor com o pior, do segundo melhor com o segundo pior
 
     parents.append(populations[0])
-    parents.append(populations[3])
     parents.append(populations[1])
     parents.append(populations[2])
+    parents.append(populations[3])
     print(f'Casais formados {parents}')
     print()
 
@@ -102,23 +114,24 @@ def mutation():
     # Apelidado aqui de "correção genética", a mutação anda de gene em gene verificando se
     # O limite superior está correto. Caso não esteja, um novo valor, dentro do seu respectivo
     # limite é sorteado, permitindo que a regra dos limites seja mantida
+    mute = random.randint(0, 20)
+    if mute == 2:
+        for i in range(4):
+            for x in range(5):
+                if (x == 0 and (crossover_results[i][x] not in range(1, 3))):
+                    crossover_results[i][x] = random.randint(2, 3)
 
-    for i in range(4):
-        for x in range(5):
-            if (x == 0 and (crossover_results[i][x] not in range(1, 3))):
-                crossover_results[i][x] = random.randint(2, 3)
+                if (x == 1 and (crossover_results[i][x] not in range(1, 4))):
+                    crossover_results[i][x] = random.randint(3, 4)
 
-            if (x == 1 and (crossover_results[i][x] not in range(1, 4))):
-                crossover_results[i][x] = random.randint(3, 4)
+                if (x == 2 and (crossover_results[i][x] not in range(1, 5))):
+                    crossover_results[i][x] = random.randint(4, 5)
 
-            if (x == 2 and (crossover_results[i][x] not in range(1, 5))):
-                crossover_results[i][x] = random.randint(4, 5)
+                if (x == 3 and (crossover_results[i][x] not in range(1, 6))):
+                    crossover_results[i][x] = random.randint(5, 6)
 
-            if (x == 3 and (crossover_results[i][x] not in range(1, 6))):
-                crossover_results[i][x] = random.randint(5, 6)
-
-            if (x == 4 and (crossover_results[i][x] not in range(1, 12))):
-                crossover_results[i][x] = random.randint(6, 12)
+                if (x == 4 and (crossover_results[i][x] not in range(1, 12))):
+                    crossover_results[i][x] = random.randint(6, 12)
 
     populations = crossover_results
     print()
@@ -142,11 +155,32 @@ def ajusta_populacao():
 
 
 def plotar_grafico(geracoes, scores):
+    global mem, cpu, pid
+    aux = []
+    for i in range(len(scores)):
+        aux.append(float(scores[i]))
+
     plt.xlabel('Gerações')
     plt.ylabel('Fitness')
-    print(f'Scores {scores}')
-    plt.plot(geracoes,scores)
+    plt.plot(geracoes, aux)
     plt.show()
+    print()
+    print("Monitoramos o uso de memória e cpu ao longo das gerações, gostaria de ver os gráficos de desempenho?")
+    print()
+    print("1 - Sim")
+    print("0 - Não")
+    print()
+    segue = int(input())
+    if (segue == 1):
+        plt.xlabel('Gerações')
+        plt.ylabel('Memória')
+        plt.plot(geracoes, mem)
+        plt.show()
+
+        plt.xlabel('Gerações')
+        plt.ylabel('CPU')
+        plt.plot(geracoes, cpu)
+        plt.show()
 
 
 if (segue == 1):
@@ -175,6 +209,7 @@ if (segue == 1):
         print('-------------------------------------- Aplicando a mutação --------------------------------------')
         mutation()
         print()
+        uso_recursos()
 
     print()
     # Informa para o usuário os resultados

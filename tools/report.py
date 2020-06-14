@@ -4,7 +4,7 @@ def clear_report():
     f.close()
 
 def write_text(text=""):
-    print(text)
+    # print(text)
 
     f = open("report.docx", "a")
     f.write(str(text) + '\n')

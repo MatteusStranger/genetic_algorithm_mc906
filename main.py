@@ -1,9 +1,12 @@
 import tools.report as rep
 import extra_lib.metamodel as mmodel
+import matplotlib.pyplot as plt
+import numpy
 import random
 
 # As próximas cinco linhas referem-se à criação, ajuste e treinamento da rede neural que
 # serve como metamodelo para este problema. Sua operação de predição será o nosso fitness
+print()
 print(
     "Matias Vargas Maekawa Fernandes Moraes e Silva (MVMFMS) é um diretor de hospital que visa atender o máximo de pacientes possível em sua unidade hospitalar.")
 print("Para isso, ele precisa saber quantos funcionarios ele deverá contratar e qual o seu ganho com isso.")
@@ -37,6 +40,8 @@ parents = []  # Pais nos crossovers
 melhores_scores = []  # Eleição dos melhores fitness
 melhores_cromossomos = []  # Eleição dos melhores cromossomos
 crossover_results = []  # Resultado dos crossovers
+scores = []
+geracoes = []
 
 
 def generations():
@@ -44,7 +49,7 @@ def generations():
 
 
 def fitness_score():  # Aqui são eleitos os cromossomos com os melhores desempenhos de sua geração
-    global populations, best, melhores_scores, melhores_cromossomos
+    global populations, best, melhores_scores, melhores_cromossomos, scores, geracoes
     fit_value = []
     rep.write_text()
     for i in range(len(populations)):
@@ -59,7 +64,7 @@ def fitness_score():  # Aqui são eleitos os cromossomos com os melhores desempe
     best = fit_value[0]  # Variável que guarda o melhor desempenho da geração
     rep.write_text(
         f'População ordenada por score: {populations}')  # População ordenada pelo score, do melhor ao pior. Esse esquema será base para o crossover
-
+    scores.append(best)
     melhores_scores.append(best)  # Guardam os scores ordenados
     melhores_cromossomos.append(populations[0])  # Guarda o melhor cromossomo da geração
 
@@ -139,12 +144,21 @@ def ajusta_populacao():
                 populations[i][x] = random.randint(10, 12)
 
 
+def plotar_grafico(geracoes, scores):
+    plt.xlabel('Gerações')
+    plt.ylabel('Fitness')
+    rep.write_text(f'Scores {scores}')
+    plt.plot(geracoes,scores)
+    plt.show()
+
+
 if (segue == 1):
     rep.clear_report()
     M = generations()
     ajusta_populacao()  # O ajuste aqui serve para corrigir falhas que possa ter ocorrido na criação
     # da população inicial, em função dos limites superiores de cada variável
     for i in range(M):
+        geracoes.append(i)
         rep.write_text()
         rep.write_text()
         rep.write_text(
@@ -169,6 +183,7 @@ if (segue == 1):
     rep.write_text()
     # Informa para o usuário os resultados
     melhores_scores, melhores_cromossomos = zip(*sorted(zip(melhores_scores, melhores_cromossomos), reverse=True))
+    plotar_grafico(geracoes, scores)
     rep.write_text(f'Melhor fitness {melhores_scores[0]}')
     rep.write_text()
     rep.write_text(f'Melhor cromossomo {melhores_cromossomos[0]}')

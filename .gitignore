@@ -3,3 +3,4 @@ extra_lib.egg-info
 .pyc
 .vscode
 dist
+.ipynb_checkpoints

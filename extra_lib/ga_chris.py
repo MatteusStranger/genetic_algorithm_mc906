@@ -18,7 +18,7 @@ s0 = np.array([0,1,1,0,
                1,0,1,1,
                0,0,0,1,
                0,0,0,0]) # Estado inicial
-M = 1000 # Numero de geração
+M = 2000 # Numero de geração
 score = [] # melhor resultado da função objetiva
 score_fit = [] # Armazena o melhor da geração
 
@@ -37,7 +37,7 @@ for i in range(M):
     fit = [] # Guarda saída da função objetiva
     variables = [] # Guarda a saída de cada variável
     for j in range(len(s0)//2 + 1): # Rotaciona até dar uma volta completa
-        v = cromo(s0) # quebra em quatro partes
+        v = cromo(s0.copy()) # quebra em quatro partes
         temp_max = fy(v[0],v[1],v[2],v[3],v[4]) # Retorna a função objetiva
         fit.append(temp_max) # guarda função objetiva
         cromosome.append(s0.copy()) # guarda o cromossomo
@@ -52,7 +52,7 @@ for i in range(M):
     nextGen=np.argmax(fit) # Pega o melhor resultado para próxima geração
     score.append(np.max(fit)) # Armazena a melhor função obj
     score_fit.append(cromosome[nextGen]) # Armazena o melhor cromossomo
-    if (np.median(fit) == np.max(fit)):
+    if (np.median(score) == np.max(fit)):
         s0 = cromosome[np.random.randint(len(fit))]
     else:
         s0 = cromosome[np.argmax(fit)]
@@ -70,7 +70,7 @@ s0 = np.array([0,1,1,0,
                1,0,1,1,
                0,0,0,1,
                0,0,0,0]) # Estado inicial
-M = 1000 # Numero de geração
+M = 2000 # Numero de geração
 score = [] # melhor resultado da função objetiva
 score_fit = [] # Armazena o melhor da geração
 
@@ -79,7 +79,7 @@ for i in range(M):
     fit = [] # Guarda saída da função objetiva
     variables = [] # Guarda a saída de cada variável
     for j in range(len(s0)//2 + 1): # Rotaciona até dar uma volta completa
-        v = cromo(s0) # quebra em quatro partes
+        v = cromo(s0.copy()) # quebra em quatro partes
         temp_max = fm(v[0],v[1],v[2],v[3],v[4]) # Retorna a função objetiva
         fit.append(temp_max) # guarda função objetiva
         cromosome.append(s0.copy()) # guarda o cromossomo
@@ -94,7 +94,7 @@ for i in range(M):
     nextGen=np.argmax(fit) # Pega o melhor resultado para próxima geração
     score.append(np.max(fit)) # Armazena a melhor função obj
     score_fit.append(cromosome[nextGen]) # Armazena o melhor cromossomo
-    if (np.median(fit) == np.max(fit)):
+    if (np.median(score) == np.max(fit)):
         s0 = cromosome[np.random.randint(len(fit))] 
     else:
         s0 = cromosome[np.argmax(fit)]

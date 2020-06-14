@@ -69,8 +69,10 @@ def fitness_score():  # Aqui são eleitos os cromossomos com os melhores desempe
 def selectparent():  # Escolhem-se os pais
     global parents, populations
     parents.clear()
-    # Nesse esquema, por ser uma população para, então fecham-se casais
-    # O crossover se dá pelo cruzamento do melhor com o pior, do segundo melhor com o segundo pior
+    # Nesse esquema, por ser uma população de tamanho par, então fecham-se casais
+    # O crossover se dá pelo cruzamento do melhor com o pior
+    # e do segundo melhor com o segundo pior.
+    # Neste projeto, não será usado elitismo, portanto
 
     parents.append(populations[0])
     parents.append(populations[3])
@@ -144,13 +146,12 @@ def ajusta_populacao():
 def plotar_grafico(geracoes, scores):
     plt.xlabel('Gerações')
     plt.ylabel('Fitness')
-    print(f'Scores {scores}')
-    plt.plot(geracoes,scores)
+    plt.plot(geracoes, scores)
     plt.show()
 
 
 if (segue == 1):
-    M = generations()
+    M = 10  # generations()
     ajusta_populacao()  # O ajuste aqui serve para corrigir falhas que possa ter ocorrido na criação
     # da população inicial, em função dos limites superiores de cada variável
     for i in range(M):

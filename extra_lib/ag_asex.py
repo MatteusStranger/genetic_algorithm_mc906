@@ -1,43 +1,46 @@
 import numpy as np
-import metamodel as hospitalModel
+import extra_lib.metamodel as hospitalModel
 import matplotlib.pyplot as plt
+import extra_lib.monitor as monitor
 
 
 class ag_asex:
     def __init__(self):
+        self.mem = []
+        self.cpu = []
         self.mm = hospitalModel.metamodel()
         self.mm.fit()
         self.exp = np.arange(4)
         self.low_bounds = np.array([1, 1, 1, 1, 1])
         self.high_bounds = np.array([3, 4, 5, 6, 12])
         self.quantizations = (self.high_bounds - self.low_bounds) / (
-            2 ** 4 - 1
+                2 ** 4 - 1
         )  # quantização
         self.fc = (
             lambda x, exp, _type: np.sum(x * 2 ** exp) * self.quantizations[_type]
-            + self.low_bounds[_type]
+                                  + self.low_bounds[_type]
         )  # decoficação
 
         self.fy = (
             lambda x1, x2, x3, x4, x5: 1.113 * self.fc(x2, self.exp, 1).astype(int)
-            + 0.701
-            * self.fc(x2, self.exp, 1).astype(int)
-            * self.fc(x3, self.exp, 2).astype(int)
-            + 0.207
-            * self.fc(x2, self.exp, 1).astype(int)
-            * self.fc(x5, self.exp, 4).astype(int)
-            + 0.021
-            * self.fc(x1, self.exp, 0).astype(int)
-            * self.fc(x5, self.exp, 4).astype(int)
-            - 0.435 * self.fc(x2, self.exp, 1).astype(int) ** 2
-            - 0.013
-            * self.fc(x2, self.exp, 1).astype(int)
-            * self.fc(x5, self.exp, 4).astype(int) ** 2
-            - 0.092
-            * self.fc(x2, self.exp, 1).astype(int)
-            * self.fc(x3, self.exp, 2).astype(int) ** 2
-            - 1
-            + 1 / self.fc(x4, self.exp, 3).astype(int)
+                                       + 0.701
+                                       * self.fc(x2, self.exp, 1).astype(int)
+                                       * self.fc(x3, self.exp, 2).astype(int)
+                                       + 0.207
+                                       * self.fc(x2, self.exp, 1).astype(int)
+                                       * self.fc(x5, self.exp, 4).astype(int)
+                                       + 0.021
+                                       * self.fc(x1, self.exp, 0).astype(int)
+                                       * self.fc(x5, self.exp, 4).astype(int)
+                                       - 0.435 * self.fc(x2, self.exp, 1).astype(int) ** 2
+                                       - 0.013
+                                       * self.fc(x2, self.exp, 1).astype(int)
+                                       * self.fc(x5, self.exp, 4).astype(int) ** 2
+                                       - 0.092
+                                       * self.fc(x2, self.exp, 1).astype(int)
+                                       * self.fc(x3, self.exp, 2).astype(int) ** 2
+                                       - 1
+                                       + 1 / self.fc(x4, self.exp, 3).astype(int)
         )
         self.fm = lambda x1, x2, x3, x4, x5: self.mm.predict(
             [
@@ -49,13 +52,18 @@ class ag_asex:
             ]
         )[0][0]
 
-    def setModel(model):
+    def setModel(self, model):
         self.mm = model
 
-    def getModel():
+    def getModel(self):
         return self.mm
 
     def agOptim(self, fitness, with_plot=False):
+
+        def uso_recursos(self):
+            memoria, processador = monitor.monitor()
+            self.mem.append(memoria)
+            self.cpu.append(processador)
 
         s0 = np.array(
             [0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0]
@@ -92,19 +100,21 @@ class ag_asex:
                         v[pos]
                     )  # Embaralha os bits de umas da variável (muda numero)
                 s0 = (
-                    list(v[0]) + list(v[1]) + list(v[2]) + list(v[3]) + list(v[4])
+                        list(v[0]) + list(v[1]) + list(v[2]) + list(v[3]) + list(v[4])
                 )  # junta partes
                 s0 = np.roll(s0, -2)  # Gera novos indiduo com mesmo cromossomo
             score.append(np.max(fit))  # Armazena a melhor resultado da geracao
             score_fit.append(cromosome[np.argmax(fit)])  # Armazena o melhor cromossomo
             if np.median(score) == np.max(
-                fit
+                    fit
             ):  # Se resultado eh repetido (moda dos resultados obtidos)
                 s0 = cromosome[
                     np.random.randint(len(fit))
                 ]  # pega outro cromossomo diferente para self.explorar outro espaco
             else:
                 s0 = cromosome[np.argmax(fit)]  # Pega o melhor resultado
+            uso_recursos(self)
+
         best = score_fit[np.argmax(score)]  # pega melhor cromossomo
         best_varb = cromo(best)  # quebra em 5 variaveis binaria
         best_value = fitness(
@@ -123,8 +133,16 @@ class ag_asex:
         if with_plot:
             plt.plot(score)
             plt.show()
-        # print(np.max(score))
 
+            plt.ylabel('Memória')
+            plt.plot(self.mem)
+            plt.show()
+
+            plt.ylabel('CPU')
+            plt.plot(self.cpu)
+            plt.show()
+
+        # print(np.max(score))
 
 ## Como chamar agOptim(nome da funcao)
 # variable = ag_asex()
@@ -135,7 +153,7 @@ class ag_asex:
 # definir rede neural diferente
 # variable.setModel(test)
 
-#Exemplo de uso
-#ag1 = ag_asex()
-#ag1.agOptim(ag1.fm)
-#ag1q.agOptim(ag1.fy)
+# Exemplo de uso
+# ag1 = ag_asex()
+# ag1.agOptim(ag1.fm)
+# ag1q.agOptim(ag1.fy)

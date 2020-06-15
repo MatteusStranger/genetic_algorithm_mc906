@@ -19,15 +19,17 @@ import matplotlib.pyplot as plt
 from pandas.plotting import scatter_matrix
 from sklearn.model_selection import train_test_split
 from pathlib import Path
+import random
 
 
 class metamodel:
     def __init__(self, file_name="./datasets/data.csv", reproducibility=True):
         if reproducibility:
             torch.manual_seed(42)
-            np.random.seed(0)
+            np.random.seed(42)
             torch.backends.cudnn.deterministic = True
             torch.backends.cudnn.benchmark = False
+            random.seed(42)
         self.file_name = file_name
         self.df = self.load_dataframe(Path.cwd() / file_name)
         self.model = None

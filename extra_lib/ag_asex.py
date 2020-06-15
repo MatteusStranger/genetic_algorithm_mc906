@@ -85,7 +85,6 @@ class ag_asex:
         for i in range(M):
             cromosome = []  # Guarda os cromossomos com crossover
             fit = []  # Guarda saída da função objetiva
-            variables = []  # Guarda a saída de cada variável
             for j in range(len(s0) // 2 + 1):  # Rotaciona até dar uma volta completa
                 v = cromo(s0.copy())  # quebra em quatro partes
                 temp_max = fitness(
@@ -144,7 +143,7 @@ class ag_asex:
 
         # print(np.max(score))
 
-## Como chamar agOptim(nome da funcao)
+# Como chamar agOptim(nome da funcao)
 # variable = ag_asex()
 # Usar a rede neural
 # variable.agOptim(variable.fm ,with_plot=True)

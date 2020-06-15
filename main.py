@@ -43,25 +43,9 @@ if (segue == 1):
     ########################## Reprodução assexuada #####################################
     print(
         '-------------------------------------- Instanciando executando a reprodução asexuada --------------------------------------')
-    exp = np.arange(4)
-    low_bounds = np.array([1, 1, 1, 1, 1])
-    high_bounds = np.array([3, 4, 5, 6, 12])
-    quantizations = (high_bounds - low_bounds) / (2 ** 4 - 1)  # quantização
-    fc = lambda x, exp, _type: np.sum(x * 2 ** exp) * quantizations[_type] + low_bounds[_type]  # decoficação
-    fy = lambda x1, x2, x3, x4, x5: 1.113 * fc(x2, exp, 1).astype(int) + 0.701 * fc(x2, exp, 1).astype(int) * fc(x3,
-                                                                                                                 exp,
-                                                                                                                 2).astype(
-        int) + 0.207 * fc(x2, exp, 1).astype(int) * fc(x5, exp, 4).astype(int) + 0.021 * fc(x1, exp, 0).astype(
-        int) * fc(x5, exp, 4).astype(int) - \
-                                    0.435 * fc(x2, exp, 1).astype(int) ** 2 - 0.013 * fc(x2, exp, 1).astype(int) * fc(
-        x5, exp, 4).astype(int) ** 2 - 0.092 * fc(x2, exp, 1).astype(int) * fc(x3, exp, 2).astype(int) ** 2
-    fm = lambda x1, x2, x3, x4, x5: test.predict(
-        [fc(x1, exp, 0).astype(int), fc(x2, exp, 1).astype(int), fc(x3, exp, 2).astype(int), fc(x3, exp, 3).astype(int),
-         fc(x4, exp, 4).astype(int)])[0][0]
-
     ag1 = ag_asex.ag_asex()
     ag1.setModel(test)
-    t = Timer(lambda: ag1.agOptim(fm, with_plot=True))
+    t = Timer(lambda: ag1.agOptim(ag1.fm, with_plot=True))
     tempo = t.timeit(number=1)
     print(f"Tempo gasto para executar a reprodução asexuada {tempo:0.4f}s")
 

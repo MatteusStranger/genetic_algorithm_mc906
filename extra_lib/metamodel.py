@@ -8,8 +8,6 @@ __version__ = "0.1.0"
 __cite__ = "http://www.fmepro.org/XP/XP-EasyArtigos/Site/Uploads/Evento21/TrabalhosCompletosDOC/VII-030.pdf"
 
 
-# This is a new version using pytorch instead C#(deprecated AForge). Was made 100% by Christian Hideki Maekawa. 	
-
 # This is a new version using pytorch instead C#(deprecated AForge). Was made 100% by Christian Hideki Maekawa.
 
 # Inspired and researched with Rafael de Carvalho Miranda and Carlos Henrique Valério de Moraes
@@ -24,7 +22,12 @@ from pathlib import Path
 
 
 class metamodel:
-    def __init__(self, file_name="./datasets/data.csv"):
+    def __init__(self, file_name="./datasets/data.csv", reproducibility=True):
+        if reproducibility:
+            torch.manual_seed(42)
+            np.random.seed(0)
+            torch.backends.cudnn.deterministic = True
+            torch.backends.cudnn.benchmark = False
         self.file_name = file_name
         self.df = self.load_dataframe(Path.cwd() / file_name)
         self.model = None
@@ -130,23 +133,6 @@ class metamodel:
             y_pred = y_pred.numpy()
         return y_pred
 
-
-    # def train_performance(self):
-        # if (
-        #         (self.model != None)
-        #         or (len(self.train_losses) != 0)
-        #         or (len(self.test_losses) != 0)
-        # ):
-        # # plt.plot(self.train_losses)
-        # # plt.plot(self.test_losses)
-        # # #plt.show()
-        # else:
-        #     assert (
-        #             (self.model != None)
-        #             or (len(self.train_losses) != 0)
-        #             or (len(self.test_losses) != 0)
-        #     ), f"Apply fit before run performance."
-
     def train_performance(self):
         if (
             (self.model != None)
@@ -155,7 +141,7 @@ class metamodel:
         ):
             plt.plot(self.train_losses)
             plt.plot(self.test_losses)
-            # plt.show()
+            plt.show()
         else:
             assert (
                 (self.model != None)
@@ -163,15 +149,14 @@ class metamodel:
                 or (len(self.test_losses) != 0)
             ), f"Apply fit before run performance."
 
-
     def model_peformance(self):
         if self.model != None:
             with torch.no_grad():
                 line_x = np.linspace(0, len(self.X_test), len(self.X_test))
                 y_pred = self.predict(self.X_test)
-                # plt.scatter(line_x, self.y_test, label="Expected")
-                # plt.scatter(line_x, y_pred, label="Predicted")
-                # #plt.show()
+                plt.scatter(line_x, self.y_test, label="Expected")
+                plt.scatter(line_x, y_pred, label="Predicted")
+                plt.show()
         else:
             assert (
                 (self.model != None)

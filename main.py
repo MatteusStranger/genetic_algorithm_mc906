@@ -32,7 +32,6 @@ if (segue == 1):
     print(
         '-------------------------------------- Instanciando executando a reprodução sexuada --------------------------------------')
     ############################ Reprodução sexuada ########################################
-    test.model_peformance()
     ga.setModel(test)
     # ga.execucao()
 

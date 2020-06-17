@@ -3,7 +3,9 @@ import numpy as np
 import extra_lib.ag_asex as ag_asex
 import extra_lib.ga as ga
 from timeit import Timer
+import tools.report as r
 
+r.clear_report()
 print()
 print(
     "Matias Vargas Maekawa Fernandes Moraes e Silva (MVMFMS) é um diretor de hospital que visa atender o máximo de pacientes possível em sua unidade hospitalar.")
@@ -33,18 +35,19 @@ if (segue == 1):
         '-------------------------------------- Instanciando executando a reprodução sexuada --------------------------------------')
     ############################ Reprodução sexuada ########################################
     ga.setModel(test)
-    # ga.execucao()
-
+    r.write_text('Teste de execução da abordagem sexuada, 50x')
     t = Timer(lambda: ga.execucao())
     tempo = t.timeit(number=1)
     print(f"Tempo gasto para executar a reprodução sexuada {tempo:0.4f}s")
+    r.write_text(f"Tempo gasto para executar a reprodução sexuada {tempo:0.4f}s")
 
     ########################## Reprodução assexuada #####################################
     print(
         '-------------------------------------- Instanciando executando a reprodução asexuada --------------------------------------')
+    r.write_text('Teste de execução da abordagem asexuada, 50x')
     ag1 = ag_asex.ag_asex()
     ag1.setModel(test)
     t = Timer(lambda: ag1.agOptim(ag1.fm, with_plot=True))
     tempo = t.timeit(number=1)
     print(f"Tempo gasto para executar a reprodução asexuada {tempo:0.4f}s")
-
+    r.write_text(f"Tempo gasto para executar a reprodução asexuada {tempo:0.4f}s")

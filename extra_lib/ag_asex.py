@@ -2,7 +2,7 @@ import numpy as np
 import extra_lib.metamodel as hospitalModel
 import matplotlib.pyplot as plt
 import extra_lib.monitor as monitor
-
+import tools.report as r
 
 class ag_asex:
     def __init__(self):
@@ -129,6 +129,8 @@ class ag_asex:
         print(
             f"Best value: {best_value} best cromosome {best} best combination of variables {best_var}"
         )
+        r.write_text(f"{best_value} {best_var}")
+
         if with_plot:
             plt.plot(score)
             plt.show()

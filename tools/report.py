@@ -1,11 +1,11 @@
 def clear_report():
-    f = open("report.docx", "w")
+    f = open("report.txt", "w")
     f.write('')
     f.close()
 
 def write_text(text=""):
     # print(text)
 
-    f = open("report.docx", "a")
+    f = open("report.txt", "a")
     f.write(str(text) + '\n')
     f.close()

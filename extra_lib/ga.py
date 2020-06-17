@@ -1,7 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import extra_lib.monitor as monitor
-
+import tools.report as r
 # Instanciação das variáveis globais principais
 best = -100000
 high_bound = 12  # Limite superior, útil para estimar as gerações
@@ -134,7 +134,6 @@ def execucao():
     print()
     print(f"Melhor resultado : {best}")
     print()
-    print(f"Melhor cromossomo: {populations[0]}")
     print()
 
     plotar_grafico(geracoes, melhores)

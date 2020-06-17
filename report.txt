@@ -1,5 +1,0 @@
-Teste de execução da abordagem sexuada, 50x
-Tempo gasto para executar a reprodução sexuada 203.8862s
-Teste de execução da abordagem asexuada, 50x
-5.598275184631348 [2, 3, 4, 5, 6]
-Tempo gasto para executar a reprodução asexuada 71.8558s

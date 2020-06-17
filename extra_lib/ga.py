@@ -1,7 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import extra_lib.monitor as monitor
-import tools.report as r
+
 # Instanciação das variáveis globais principais
 best = -100000
 high_bound = 12  # Limite superior, útil para estimar as gerações

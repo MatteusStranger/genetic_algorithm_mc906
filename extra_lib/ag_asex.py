@@ -2,7 +2,7 @@ import numpy as np
 import extra_lib.metamodel as hospitalModel
 import matplotlib.pyplot as plt
 import extra_lib.monitor as monitor
-import tools.report as r
+
 
 class ag_asex:
     def __init__(self):
@@ -129,19 +129,27 @@ class ag_asex:
         print(
             f"Best value: {best_value} best cromosome {best} best combination of variables {best_var}"
         )
-        r.write_text(f"{best_value} {best_var}")
 
         if with_plot:
             plt.plot(score)
             plt.show()
 
-            plt.ylabel('Memória')
-            plt.plot(self.mem)
-            plt.show()
+            print("Monitoramos o uso de memória e cpu durante as gerações. "
+                  "Gostaria de ver os resultos em gráfico?")
+            print()
+            print("1 - Sim")
+            print("0 - Nao")
+            print()
+            segue = int(input())
 
-            plt.ylabel('CPU')
-            plt.plot(self.cpu)
-            plt.show()
+            if (segue == 1):
+                plt.ylabel('Memória')
+                plt.plot(self.mem)
+                plt.show()
+
+                plt.ylabel('CPU')
+                plt.plot(self.cpu)
+                plt.show()
 
         # print(np.max(score))
 

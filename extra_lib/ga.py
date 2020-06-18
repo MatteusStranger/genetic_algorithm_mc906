@@ -45,17 +45,17 @@ def selectparent():
     parents = populations[0:2]
 
 
-def crossover():
+def crossover(corte):
     global parents
-    cross_point = random.randint(0, 3)
+    cross_point = corte
     parents = parents + tuple([(parents[0][0:cross_point + 1] + parents[1][cross_point + 1:6])])
     parents = parents + tuple([(parents[1][0:cross_point + 1] + parents[0][cross_point + 1:6])])
 
 
-def mutation():
+def mutation(taxa_mutacao):
     global populations, parents
-    mute = random.randint(0, 49)
-    if mute == 25:
+    mute = random.randint(0, 100)
+    if mute == taxa_mutacao:
         x = random.randint(0, 3)
         y = random.randint(0, 4)
 
@@ -117,18 +117,38 @@ def ajusta_populacao(populations):
                 populations[i][x] = random.randint(10, 12)
 
 
-def execucao():
+def execucao(modo):
     ajusta_populacao(populations)
     print(f'População inicial {populations}')
 
-    M = 2000  # generations()
+    if(modo == 2):
+        print()
+        print("Entre com a quantidade de gerações")
+        M = int(input())
+        print()
+        print("O crossover padrão divide o cromossomo exatamente no meio. Nesse modo você pode escolher"
+              "a posição de corte. Escolha um valor entre 0~4")
+        corte = int(input())
+        print()
+        print("Defina a sua taxa de mutação. Esse valor corresponde as chances de uma geração sofrer mutação."
+              "Isso é importante para alcançar uma boa solução"
+              " Entre com um valor entre 0~100")
+        taxa_mutacao = int(input())
+    else:
+        M = 2000
+        corte = 2
+        taxa_mutacao = 25
+
     for i in range(M):
+        print()
+        print(f'Geração {i}')
+        print()
         geracoes.append(i)
 
         fitness_score()
         selectparent()
-        crossover()
-        mutation()
+        crossover(corte)
+        mutation(taxa_mutacao)
         uso_recursos()
 
     print()

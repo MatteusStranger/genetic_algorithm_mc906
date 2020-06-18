@@ -118,11 +118,19 @@ def ajusta_populacao(populations):
 
 
 def execucao(modo):
-    ajusta_populacao(populations)
-    print(f'População inicial {populations}')
-
-    if(modo == 2):
+    if (modo == 2):
         print()
+        print("Gostaria de uma população fixa ou aleatória?")
+        print("0 - Fixa")
+        print("1 - Aleatória")
+        pop = int(input())
+        if pop==0:
+            global populations
+            populations = [[3, 1, 3, 3, 10], [1, 3, 5, 2, 9], [2, 2, 3, 4, 1], [3, 2, 5, 6, 5]]
+            print()
+            print(f'População inicial {populations}')
+            print()
+
         print("Entre com a quantidade de gerações")
         M = int(input())
         print()
@@ -134,10 +142,14 @@ def execucao(modo):
               "Isso é importante para alcançar uma boa solução"
               " Entre com um valor entre 0~100")
         taxa_mutacao = int(input())
+
     else:
+        ajusta_populacao(populations)
+        print(f'População inicial {populations}')
         M = 2000
         corte = 2
         taxa_mutacao = 25
+
 
     for i in range(M):
         print()

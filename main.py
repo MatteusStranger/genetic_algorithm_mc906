@@ -53,11 +53,11 @@ if (segue == 1):
     print(f"Tempo gasto para executar a reprodução sexuada {tempo:0.4f}s")
 
     # ########################## Reprodução assexuada #####################################
-    # print(
-    #     '-------------------------------------- Instanciando executando a reprodução asexuada --------------------------------------')
-    #
-    # ag1 = ag_asex.ag_asex()
-    # ag1.setModel(test)
-    # t = Timer(lambda: ag1.agOptim(ag1.fm, with_plot=True))
-    # tempo = t.timeit(number=1)
-    # print(f"Tempo gasto para executar a reprodução asexuada {tempo:0.4f}s")
+    print(
+        '-------------------------------------- Instanciando executando a reprodução asexuada --------------------------------------')
+
+    ag1 = ag_asex.ag_asex()
+    ag1.setModel(test)
+    t = Timer(lambda: ag1.agOptim(ag1.fm, with_plot=True))
+    tempo = t.timeit(number=1)
+    print(f"Tempo gasto para executar a reprodução asexuada {tempo:0.4f}s")

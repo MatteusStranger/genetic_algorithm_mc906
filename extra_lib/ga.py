@@ -1,6 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import extra_lib.monitor as monitor
+import tools.report as r
 
 # Instanciação das variáveis globais principais
 best = -100000
@@ -17,6 +18,13 @@ mem = []
 cpu = []
 
 
+def define_snapshot(M, geracao):
+    if ((geracao / M) in (0.25, 0, 4, 0.55, 0.7, 0.85, 0.95, 1)):
+        return True
+    else:
+        return False
+
+
 def setModel(model):
     global test
     test = model
@@ -29,7 +37,7 @@ def uso_recursos():
     cpu.append(processador)
 
 
-def fitness_score():
+def fitness_score(snapshot):
     global populations, best
     fit_value = []
     for i in range(len(populations)):
@@ -37,22 +45,29 @@ def fitness_score():
     fit_value, populations = zip(*sorted(zip(fit_value, populations), reverse=True))
     best = fit_value[0]
     melhores.append(best)
+    if (snapshot == True):
+        r.write_text(f'Melhor fitness {best}')
 
 
-def selectparent():
+def selectparent(snapshot):
     global parents
     # global populations , parents
     parents = populations[0:2]
+    if (snapshot == True):
+        r.write_text(f'Pais selecionados {parents}')
 
 
-def crossover(corte):
+def crossover(corte, snapshot):
     global parents
     cross_point = corte
     parents = parents + tuple([(parents[0][0:cross_point + 1] + parents[1][cross_point + 1:6])])
     parents = parents + tuple([(parents[1][0:cross_point + 1] + parents[0][cross_point + 1:6])])
+    if (snapshot == True):
+        r.write_text(f'Ponto de corte no cromossomo {cross_point}')
+        r.write_text(f'Filhos {parents}')
 
 
-def mutation(taxa_mutacao):
+def mutation(taxa_mutacao, snapshot):
     global populations, parents
     mute = random.randint(0, 100)
     if mute == taxa_mutacao:
@@ -70,6 +85,9 @@ def mutation(taxa_mutacao):
         if (y == 4):
             parents[x][y] = random.randint(1, 12)  # 1 - parents[x][y]
     populations = parents
+    if (snapshot == True):
+        r.write_text(f'Taxa de mutação definida pelo usuário {taxa_mutacao}, taxa de mutação definida {mute}')
+        r.write_text(f'Nova população {populations}')
 
 
 def plotar_grafico(geracoes, scores):
@@ -124,9 +142,9 @@ def execucao(modo):
         print("0 - Fixa")
         print("1 - Aleatória")
         pop = int(input())
-        if pop==0:
+        if pop == 0:
             global populations
-            populations = [[3, 1, 3, 3, 10], [1, 3, 5, 2, 9], [2, 2, 3, 4, 1], [3, 2, 5, 6, 5]]
+            populations = [[3, 1, 3, 3, 10], [1, 3, 5, 2, 9], [2, 2, 3, 4, 12], [3, 2, 5, 6, 5]]
             print()
             print(f'População inicial {populations}')
             print()
@@ -150,17 +168,19 @@ def execucao(modo):
         corte = 2
         taxa_mutacao = 25
 
-
     for i in range(M):
         print()
         print(f'Geração {i}')
         print()
         geracoes.append(i)
-
-        fitness_score()
-        selectparent()
-        crossover(corte)
-        mutation(taxa_mutacao)
+        snapshot = define_snapshot(M, i)
+        if (snapshot):
+            r.write_text()
+            r.write_text(f"Snapshot da geração {i}")
+        fitness_score(snapshot)
+        selectparent(snapshot)
+        crossover(corte, snapshot)
+        mutation(taxa_mutacao, snapshot)
         uso_recursos()
 
     print()

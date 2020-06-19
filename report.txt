@@ -1,0 +1,48 @@
+
+Snapshot da geração 0
+Melhor fitness [[5.7029037]]
+Pais selecionados ([1, 3, 5, 2, 9], [2, 2, 3, 4, 12])
+Ponto de corte no cromossomo 1
+Filhos ([1, 3, 5, 2, 9], [2, 2, 3, 4, 12], [1, 3, 3, 4, 12], [2, 2, 5, 2, 9])
+Taxa de mutação definida pelo usuário 60, taxa de mutação definida 81
+Nova população ([1, 3, 5, 2, 9], [2, 2, 3, 4, 12], [1, 3, 3, 4, 12], [2, 2, 5, 2, 9])
+
+Snapshot da geração 875
+Melhor fitness [[5.9155235]]
+Pais selecionados ([2, 4, 5, 2, 9], [2, 4, 5, 2, 9])
+Ponto de corte no cromossomo 1
+Filhos ([2, 4, 5, 2, 9], [2, 4, 5, 2, 9], [2, 4, 5, 2, 9], [2, 4, 5, 2, 9])
+Taxa de mutação definida pelo usuário 60, taxa de mutação definida 59
+Nova população ([2, 4, 5, 2, 9], [2, 4, 5, 2, 9], [2, 4, 5, 2, 9], [2, 4, 5, 2, 9])
+
+Snapshot da geração 1925
+Melhor fitness [[5.9186373]]
+Pais selecionados ([2, 4, 5, 1, 9], [2, 4, 5, 1, 9])
+Ponto de corte no cromossomo 1
+Filhos ([2, 4, 5, 1, 9], [2, 4, 5, 1, 9], [2, 4, 5, 1, 9], [2, 4, 5, 1, 9])
+Taxa de mutação definida pelo usuário 60, taxa de mutação definida 82
+Nova população ([2, 4, 5, 1, 9], [2, 4, 5, 1, 9], [2, 4, 5, 1, 9], [2, 4, 5, 1, 9])
+
+Snapshot da geração 2450
+Melhor fitness [[5.9186373]]
+Pais selecionados ([2, 4, 5, 1, 9], [2, 4, 5, 1, 9])
+Ponto de corte no cromossomo 1
+Filhos ([2, 4, 5, 1, 9], [2, 4, 5, 1, 9], [2, 4, 5, 1, 9], [2, 4, 5, 1, 9])
+Taxa de mutação definida pelo usuário 60, taxa de mutação definida 5
+Nova população ([2, 4, 5, 1, 9], [2, 4, 5, 1, 9], [2, 4, 5, 1, 9], [2, 4, 5, 1, 9])
+
+Snapshot da geração 2975
+Melhor fitness [[5.929925]]
+Pais selecionados ([2, 4, 5, 1, 10], [2, 4, 5, 1, 10])
+Ponto de corte no cromossomo 1
+Filhos ([2, 4, 5, 1, 10], [2, 4, 5, 1, 10], [2, 4, 5, 1, 10], [2, 4, 5, 1, 10])
+Taxa de mutação definida pelo usuário 60, taxa de mutação definida 19
+Nova população ([2, 4, 5, 1, 10], [2, 4, 5, 1, 10], [2, 4, 5, 1, 10], [2, 4, 5, 1, 10])
+
+Snapshot da geração 3325
+Melhor fitness [[5.933655]]
+Pais selecionados ([3, 4, 5, 1, 10], [3, 4, 5, 1, 10])
+Ponto de corte no cromossomo 1
+Filhos ([3, 4, 5, 1, 10], [3, 4, 5, 1, 10], [3, 4, 5, 1, 10], [3, 4, 5, 1, 10])
+Taxa de mutação definida pelo usuário 60, taxa de mutação definida 100
+Nova população ([3, 4, 5, 1, 10], [3, 4, 5, 1, 10], [3, 4, 5, 1, 10], [3, 4, 5, 1, 10])

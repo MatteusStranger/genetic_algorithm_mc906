@@ -21,7 +21,7 @@ This project is related with **Simulation**. To making a decision is common comp
 
 The propose of this project is predicts the number of employees needs to cover affected area with disease to predict the number of patients we can heal. Was required to find the number of employees to maximize the number of patients served to cover the affected region. Maximize all parameter is not a solution because the employee has dependencies with each other, and we need to avoid unnecessary expenses with extra employees, idle time and bottleneck if possible.
 
-Although, the project has strong relationship with simulation the scope of this project is Genetic algorithm. The project uses a dataset that was generated from article that simulate a hospital model simulation. The description about how to model a simulated hospital was got from other article about how to create simulated hospital. The article we based reproduce the article and create simulated hospital with software simulation. So, they generate the data that we use to create a metamodel. About create metamodel using artificial networking has an article and was reconstructed using python instead C# (article). Metamodel is a meta representation of the real model, all reproduction was compared with results obtained with articles.
+Although, the project has strong relationship with simulation the scope of this project is Genetic algorithm. The project uses a dataset that was generated from [[1]](http://www.abepro.org.br/biblioteca/TN_STO_211_253_27544.pdf) that simulate a hospital model simulation. The description about how to model a simulated hospital was got from other article about how to create simulated hospital[[2]](https://www.sciencedirect.com/science/article/pii/S1877050912002827?via%3Dihub). Miranda [[1]](http://www.abepro.org.br/biblioteca/TN_STO_211_253_27544.pdf) based on  [[2]](https://www.sciencedirect.com/science/article/pii/S1877050912002827?via%3Dihub)  and create simulated hospital with software simulation. So, they generate the data that we use to create a metamodel. About creation of metamodel using artificial networking was reconstructed using python . Metamodel is a meta representation of the real model, all reproduction was compared with results obtained with articles.
 
 Is out of scope explore about software simulation and metamodel. All settings were got from literature and tried to reproduce as close as possible.
 
@@ -33,7 +33,7 @@ The target about this project is about Genetic Algorithm. So was used the output
 Find the number of employees needed to maximize the number of patients served.
 
 ## The evolutionary model adopted
-There are two evolutionary model adopted... 
+There are two evolutionary model with  sexual crossing over and other with assexual, auto-reproduction.
 
 ## Implementation specifics and restrictions
 
@@ -45,7 +45,6 @@ There are two evolutionary model adopted...
 |x4            | Number of nurses in the treatment room      | Integer |        1         |       6        |
 |x5            | Number of nurses in the emergency room      | Integer |        1         |       12       |
 
-### Cromossomo representation 
 
 ## Variations on parameters
 - Population 2000
@@ -61,3 +60,9 @@ There are two evolutionary model adopted...
 - replacement method: sexual get half from each best parents assexual get last parent and rotate 2 to left
 - mutation rate : sexual use 2% and assexual depends of median repetion
 - crossover rate : 50% sexual, assexual rotate 2 gene so 10% until get 100% rotate
+
+### References
+
+[[1]](http://www.abepro.org.br/biblioteca/TN_STO_211_253_27544.pdf) DE CARVALHO MIRANDA, Rafael et al. **Otimização via simulação por metamodelagem: um estudo em casos da área médica**. Revista Produção Online, v. 16, n. 3, p. 1058-1078, 2016.
+
+[[2]](https://www.sciencedirect.com/science/article/pii/S1877050912002827?via%3Dihub) CABRERA, Eduardo et al. **Simulation optimization for healthcare emergency departments**. Procedia Computer Science, v. 9, p. 1464-1473, 2012.

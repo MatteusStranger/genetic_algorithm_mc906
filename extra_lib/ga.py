@@ -38,13 +38,14 @@ def uso_recursos():
 
 
 def fitness_score(snapshot):
-    global populations, best
+    global populations, best, melhores_cromossomos
     fit_value = []
     for i in range(len(populations)):
         fit_value.append(test.predict(populations[i]))
     fit_value, populations = zip(*sorted(zip(fit_value, populations), reverse=True))
     best = fit_value[0]
     melhores.append(best)
+    melhores_cromossomos.append(populations[0])
     if (snapshot == True):
         r.write_text(f'Melhor fitness {best}')
 
@@ -69,6 +70,7 @@ def crossover(corte, snapshot):
 
 def mutation(taxa_mutacao, snapshot):
     global populations, parents
+    print(f'Populacao {parents}')
     mute = random.randint(0, 100)
     if mute == taxa_mutacao:
         x = random.randint(0, 3)
@@ -85,6 +87,8 @@ def mutation(taxa_mutacao, snapshot):
         if (y == 4):
             parents[x][y] = random.randint(1, 12)  # 1 - parents[x][y]
     populations = parents
+
+    print(f'Nova Populacao {parents}')
     if (snapshot == True):
         r.write_text(f'Taxa de mutação definida pelo usuário {taxa_mutacao}, taxa de mutação definida {mute}')
         r.write_text(f'Nova população {populations}')
@@ -184,8 +188,10 @@ def execucao(modo):
         uso_recursos()
 
     print()
-    print(f"Melhor resultado : {best}")
+    bests, melhores_crom = zip(*sorted(zip(melhores, melhores_cromossomos), reverse=True))
+    print(f"Melhor resultado : {bests[0]}")
     print()
+    print(f"Melhor Cromossomo : {melhores_crom[0]}")
     print()
 
     plotar_grafico(geracoes, melhores)

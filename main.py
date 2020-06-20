@@ -30,32 +30,31 @@ if (segue == 1):
     test = mmodel.metamodel()
     test.cuda_status()
     test.fit()
-    print()
-    print(
-        '-------------------------------------- Instanciando executando a reprodução sexuada --------------------------------------')
-    ############################ Reprodução sexuada ########################################
-    ga.setModel(test)
-    print()
-    print("Temos dois modos para rodar o código: execução e teste")
-    print(
-        "No primeiro modo o código será executado de modo default, como foi concebido inicialmente pelos desenvolvedores")
-    print(
-        "No segundo modo serão pedidas algumas entradas do usuário a fim de fazermos testes de parâmetros. Aqui a população inicial deixará de ser aleatória e será "
-        "definida manualmente por padrão")
-    print()
-    print("1 - Execução")
-    print("2 - Teste")
+    # print()
+    # print(
+    #     '-------------------------------------- Instanciando executando a reprodução sexuada --------------------------------------')
+    # ############################ Reprodução sexuada ########################################
+    # ga.setModel(test)
+    # print()
+    # print("Temos dois modos para rodar o código: execução e teste")
+    # print(
+    #     "No primeiro modo o código será executado de modo default, como foi concebido inicialmente pelos desenvolvedores")
+    # print(
+    #     "No segundo modo serão pedidas algumas entradas do usuário a fim de fazermos testes de parâmetros. Aqui a população inicial deixará de ser aleatória e será "
+    #     "definida manualmente por padrão")
+    # print()
+    # print("1 - Execução")
+    # print("2 - Teste")
 
-    modo = int(input())
+    # modo = int(input())
 
-    t = Timer(lambda: ga.execucao(modo))
-    tempo = t.timeit(number=1)
-    print(f"Tempo gasto para executar a reprodução sexuada {tempo:0.4f}s")
+    # t = Timer(lambda: ga.execucao(modo))
+    # tempo = t.timeit(number=1)
+    # print(f"Tempo gasto para executar a reprodução sexuada {tempo:0.4f}s")
 
     # ########################## Reprodução assexuada #####################################
     print(
         '-------------------------------------- Instanciando executando a reprodução asexuada --------------------------------------')
-
     ag1 = ag_asex.ag_asex()
     ag1.setModel(test)
     t = Timer(lambda: ag1.agOptim(ag1.fm, with_plot=True))

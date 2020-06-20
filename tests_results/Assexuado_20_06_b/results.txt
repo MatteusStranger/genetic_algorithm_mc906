@@ -1,0 +1,26 @@
+(1000, 0, 10):
+    Best value: 5.490771293640137 best cromosome [0 0 1 1 0 0 1 1 0 1 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]
+
+(1000, 0, 20):
+    Best value: 5.490771293640137 best cromosome [0 1 0 1 0 0 1 1 1 0 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]
+
+(1000, 0, 30):
+    Best value: 5.490771293640137 best cromosome [1 0 0 1 0 1 0 1 1 0 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]
+
+(1000, 0, 40):
+    Best value: 5.490771293640137 best cromosome [0 1 0 1 0 1 0 1 1 0 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]
+
+(1000, 0, 50):
+    Best value: 5.490771293640137 best cromosome [1 0 0 1 0 0 1 1 1 0 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]
+
+(1000, 0, 60):
+    Best value: 5.490771293640137 best cromosome [1 0 0 1 0 0 1 1 0 1 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]
+
+(1000, 0, 70):
+    Best value: 5.490771293640137 best cromosome [0 1 0 1 0 1 0 1 0 1 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]
+
+(1000, 0, 80):
+    Best value: 5.490771293640137 best cromosome [0 0 1 1 0 1 0 1 1 0 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]
+
+(1000, 0, 90):
+    Best value: 5.490771293640137 best cromosome [0 0 1 1 0 1 0 1 0 1 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 3, 4, 3, 1]

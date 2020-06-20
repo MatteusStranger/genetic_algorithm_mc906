@@ -1,3 +1,4 @@
+import random
 import numpy as np
 import extra_lib.metamodel as hospitalModel
 import matplotlib.pyplot as plt
@@ -67,6 +68,11 @@ class ag_asex:
         self_reproduction = int(input())
         print()
 
+        print("Informe a taxa de mutacao (%):")
+        mutation_rate = int(input())
+        print()
+
+
         def uso_recursos(self):
             memoria, processador = monitor.monitor()
             self.mem.append(memoria)
@@ -98,7 +104,8 @@ class ag_asex:
                 )  # Retorna a função fitness
                 fit.append(temp_max)  # guarda resultado fitness
                 cromosome.append(s0.copy())  # guarda o cromossomo
-                if (np.min(temp_max) < 0) | (j%2==0):
+                mutate = random.randint(0, 100)
+                if (np.min(temp_max) < 0) | (mutate==mutation_rate):
                     # aplica mutacao para evitar função obj negativa e cromossomo repetido
                     pos = np.random.randint(4)  # Escolhe uma das 5 variáveis
                     np.random.shuffle(
@@ -108,7 +115,7 @@ class ag_asex:
                         list(v[0]) + list(v[1]) + list(v[2]) + list(v[3]) + list(v[4])
                 )  # junta partes
                 s0 = np.roll(s0, self_reproduction)  # Gera novos individuos com mesmo cromossomo
-            score.append(np.max(fit))  # Armazena a melhor resultado da geracao
+            score.append(np.max(fit))  # Armazena 0 melhor resultado da geracao
             score_fit.append(cromosome[np.argmax(fit)])  # Armazena o melhor cromossomo
 
             if np.median(score) == np.max(fit):  # Se resultado eh repetido (moda dos resultados obtidos)
@@ -138,22 +145,22 @@ class ag_asex:
             plt.plot(score)
             plt.savefig("score.png")
 
-            print("Monitoramos o uso de memória e cpu durante as gerações. "
-                  "Gostaria de ver os resultos em gráfico?")
-            print()
-            print("1 - Sim")
-            print("0 - Nao")
-            print()
-            segue = int(input())
+            # print("Monitoramos o uso de memória e cpu durante as gerações. "
+            #       "Gostaria de ver os resultos em gráfico?")
+            # print()
+            # print("1 - Sim")
+            # print("0 - Nao")
+            # print()
+            # segue = int(input())
 
-            if (segue == 1):
-                plt.ylabel('Memória')
-                plt.plot(self.mem)
-                plt.show()
+            # if (segue == 1):
+            #     plt.ylabel('Memória')
+            #     plt.plot(self.mem)
+            #     plt.show()
 
-                plt.ylabel('CPU')
-                plt.plot(self.cpu)
-                plt.show()
+            #     plt.ylabel('CPU')
+            #     plt.plot(self.cpu)
+            #     plt.show()
 
         # print(np.max(score))
 

@@ -59,6 +59,13 @@ class ag_asex:
         return self.mm
 
     def agOptim(self, fitness, with_plot=False):
+        print("Entre com a quantidade de gerações:")
+        M = int(input())
+        print()
+
+        print("Informe o valor da autorreprodução (valor negativo):")
+        self_reproduction = int(input())
+        print()
 
         def uso_recursos(self):
             memoria, processador = monitor.monitor()
@@ -68,7 +75,6 @@ class ag_asex:
         s0 = np.array(
             [0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0]
         )  # Estado inicial
-        M = 2000  # Numero de geração
         score = []  # melhor resultado da função fitness
         score_fit = []  # Armazena o melhor da geração
 
@@ -86,13 +92,13 @@ class ag_asex:
             cromosome = []  # Guarda os cromossomos com crossover
             fit = []  # Guarda saída da função objetiva
             for j in range(len(s0) // 2 + 1):  # Rotaciona até dar uma volta completa
-                v = cromo(s0.copy())  # quebra em quatro partes
+                v = cromo(s0.copy())  #quebra em quatro partes
                 temp_max = fitness(
                     v[0], v[1], v[2], v[3], v[4]
                 )  # Retorna a função fitness
                 fit.append(temp_max)  # guarda resultado fitness
                 cromosome.append(s0.copy())  # guarda o cromossomo
-                if (np.min(temp_max) < 0) | (np.median(fit) == np.max(fit)):
+                if (np.min(temp_max) < 0) | (j%2 == 0):
                     # aplica mutacao para evitar função obj negativa e cromossomo repetido
                     pos = np.random.randint(4)  # Escolhe uma das 5 variáveis
                     np.random.shuffle(
@@ -101,17 +107,14 @@ class ag_asex:
                 s0 = (
                         list(v[0]) + list(v[1]) + list(v[2]) + list(v[3]) + list(v[4])
                 )  # junta partes
-                s0 = np.roll(s0, -2)  # Gera novos indiduo com mesmo cromossomo
+                s0 = np.roll(s0, self_reproduction)  # Gera novos indiduos com mesmo cromossomo
             score.append(np.max(fit))  # Armazena a melhor resultado da geracao
             score_fit.append(cromosome[np.argmax(fit)])  # Armazena o melhor cromossomo
-            if np.median(score) == np.max(
-                    fit
-            ):  # Se resultado eh repetido (moda dos resultados obtidos)
-                s0 = cromosome[
-                    np.random.randint(len(fit))
-                ]  # pega outro cromossomo diferente para self.explorar outro espaco
+            if i%2 == 0:  # Aumenta a taxa de mutação para 50%
+                s0 = cromosome[np.random.randint(len(fit))]  # pega outro cromossomo diferente para self.explorar outro espaco
             else:
                 s0 = cromosome[np.argmax(fit)]  # Pega o melhor resultado
+
             uso_recursos(self)
 
         best = score_fit[np.argmax(score)]  # pega melhor cromossomo

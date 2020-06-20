@@ -1,0 +1,25 @@
+(Geração, autorreprodução, taxa de mutação)
+
+(100, -2, 0,25):
+    Progress 100.0%, Train Loss: 0.0459 Test Loss: 0.0471
+    Best value: 5.66025447845459 best cromosome [0 0 0 1 1 1 1 1 0 0 0 1 1 0 0 1 0 0 0 0] best combination of variables [2, 4, 3, 4, 1]
+
+(4000, -2, 0,25):
+    Progress 100.0%, Train Loss: 0.0459 Test Loss: 0.0471
+    Best value: 5.808588981628418 best cromosome [0 0 0 0 1 1 1 1 0 0 1 1 0 0 1 1 0 0 0 0] best combination of variables [1, 4, 4, 5, 1]
+
+(100, -3, 0,25):
+    Progress 100.0%, Train Loss: 0.0459 Test Loss: 0.0471
+    Best value: 5.509788513183594 best cromosome [0 0 0 0 0 0 1 1 0 1 1 1 1 0 0 1 0 0 0 1] best combination of variables [1, 3, 4, 4, 6]
+
+(4000, -3, 0,25):
+    Progress 100.0%, Train Loss: 0.0459 Test Loss: 0.0471
+    Best value: 5.8050127029418945 best cromosome [0 0 0 1 1 1 1 1 0 0 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 4, 4, 3, 1]
+
+(100, -2, 0,5):
+    Progress 100.0%, Train Loss: 0.0459 Test Loss: 0.0471
+    Best value: 5.598275184631348 best cromosome [0 0 0 1 0 0 1 1 0 0 1 1 0 0 1 1 1 0 0 0] best combination of variables [2, 3, 4, 5, 1]
+
+(4000, -2, 0,5):
+    Progress 100.0%, Train Loss: 0.0459 Test Loss: 0.0471
+    Best value: 5.8050127029418945 best cromosome [0 0 0 1 1 1 1 1 0 0 1 1 0 0 0 1 0 0 0 0] best combination of variables [2, 4, 4, 3, 1]

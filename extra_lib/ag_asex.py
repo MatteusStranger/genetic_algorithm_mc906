@@ -98,7 +98,7 @@ class ag_asex:
                 )  # Retorna a função fitness
                 fit.append(temp_max)  # guarda resultado fitness
                 cromosome.append(s0.copy())  # guarda o cromossomo
-                if (np.min(temp_max) < 0) | (j%2 == 0):
+                if (np.min(temp_max) < 0) | (j%2==0):
                     # aplica mutacao para evitar função obj negativa e cromossomo repetido
                     pos = np.random.randint(4)  # Escolhe uma das 5 variáveis
                     np.random.shuffle(
@@ -107,10 +107,11 @@ class ag_asex:
                 s0 = (
                         list(v[0]) + list(v[1]) + list(v[2]) + list(v[3]) + list(v[4])
                 )  # junta partes
-                s0 = np.roll(s0, self_reproduction)  # Gera novos indiduos com mesmo cromossomo
+                s0 = np.roll(s0, self_reproduction)  # Gera novos individuos com mesmo cromossomo
             score.append(np.max(fit))  # Armazena a melhor resultado da geracao
             score_fit.append(cromosome[np.argmax(fit)])  # Armazena o melhor cromossomo
-            if i%2 == 0:  # Aumenta a taxa de mutação para 50%
+
+            if np.median(score) == np.max(fit):  # Se resultado eh repetido (moda dos resultados obtidos)
                 s0 = cromosome[np.random.randint(len(fit))]  # pega outro cromossomo diferente para self.explorar outro espaco
             else:
                 s0 = cromosome[np.argmax(fit)]  # Pega o melhor resultado
@@ -135,7 +136,7 @@ class ag_asex:
 
         if with_plot:
             plt.plot(score)
-            plt.show()
+            plt.savefig("score.png")
 
             print("Monitoramos o uso de memória e cpu durante as gerações. "
                   "Gostaria de ver os resultos em gráfico?")

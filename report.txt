@@ -1,8 +1,0 @@
-
-Snapshot da geração 0
-Melhor fitness [[5.7029037]]
-Pais selecionados ([1, 3, 5, 2, 9], [2, 2, 3, 4, 12])
-Ponto de corte no cromossomo 1
-Filhos ([1, 3, 5, 2, 9], [2, 2, 3, 4, 12], [1, 3, 3, 4, 12], [2, 2, 5, 2, 9])
-Taxa de mutação definida pelo usuário 20, taxa de mutação definida 81
-Nova população ([1, 3, 5, 2, 9], [2, 2, 3, 4, 12], [1, 3, 3, 4, 12], [2, 2, 5, 2, 9])
